@@ -72,7 +72,7 @@ class Reactor {
   }
 
   getConnectedUsers() {
-    logger(this.sockets);
+    logger(this.sockets); // only id name
   }
 
   initEvtX() {
@@ -90,7 +90,7 @@ class Reactor {
         evtx.run(message, localCtx)
           .then((res) => {
             socket.emit('action', res);
-            // this.getConnectedUsers();
+            this.getConnectedUsers();
             logger(`sent ${res.type} action`);
           })
           .catch((err) => {
@@ -105,6 +105,13 @@ class Reactor {
   }
 }
 
-const init = (evtx, io, secretKey, users) => Promise.resolve(new Reactor(evtx, io, secretKey, users));
+const init = ((evtx, io, secretKey, users) => {
+  const reactor = new Reactor(evtx, io, secretKey, users);
+  return {
+    getConnectedUsers() {
+      return reactor.getConnectedUsers();
+    },
+  };
+});
 
 export default init;

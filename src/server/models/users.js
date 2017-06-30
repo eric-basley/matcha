@@ -5,7 +5,8 @@ const pgp = pgpConnector({ capSQL: true });
 
 const users = {
   logout(user) {
-    this.emit('logout', user);
+    const { socket } = this.locals;
+    this.emit('logout', { user, socket });
   },
   load(id) {
     return this.db.one(`SELECT * FROM users WHERE id = ${id}`);
