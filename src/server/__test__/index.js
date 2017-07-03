@@ -29,7 +29,7 @@ describe('functional', () => {
   it('should ping', function (done) {
     const data = 'pong';
     const message = {
-      type: 'status:ping',
+      type: 'admin:ping',
       payload: { data },
       replyTo: 'pong',
     };
@@ -42,9 +42,9 @@ describe('functional', () => {
     });
   });
 
-  it('should print status', function (done) {
+  it('should print status admin', function (done) {
     const message = {
-      type: 'status:get',
+      type: 'admin:status',
       payload: {},
       replyTo: 'get',
     };

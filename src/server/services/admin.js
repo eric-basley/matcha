@@ -6,11 +6,11 @@ const service = {
     return Promise.resolve({ ping: 'pong' });
   },
   status() {
-    const { startTime, config: { postgres }, models: { users }, reactor } = this.globals;
-    const connectedUsers = reactor.getConnectedUsers();
+    const { startTime, config: { postgres }, models: { users } } = this.globals;
+    // const connectedUsers = reactor.getConnectedUsers();
     return users.ping().then(() => ({
       startTime,
-      connectedUsers,
+      // connectedUsers,
       postgres: { ...R.omit('password', postgres), ping: 'pong' },
     }));
   },

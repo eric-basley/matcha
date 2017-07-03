@@ -7,6 +7,12 @@ import { loadProfil, filterBySexeAge, cleanUser, sortGeoLoc } from './hooks/sugg
 const service = {
   name: 'users',
 
+  logout(user) {
+    const { socket } = this.locals;
+    const { models: { users } } = this.globals;
+    users.emit('logout', { user, socket });
+  },
+
   login({ user, password }) {
     const { models: { users } } = this.globals;
     return bcrypt.compare(password, user.password).then(() => {
@@ -45,6 +51,7 @@ const init = (evtx) => evtx
   .use(service.name, service)
   .service(service.name)
   .before({
+    logout: [checkAuth],
     login: [getByEmail],
     suggestion: [checkAuth, loadProfil, filterBySexeAge, cleanUser, sortGeoLoc],
     get: [checkAuth],
