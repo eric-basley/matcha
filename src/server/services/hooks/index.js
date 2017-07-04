@@ -11,7 +11,6 @@ export const validateRegisterForm = (ctx) => {
     const { config: { httpCode: { BadRequest } } } = ctx.globals;
     return Promise.reject({ status: BadRequest });
   }
-  // console.log('validateRegisterForm'); // eslint-disable-line
   return Promise.resolve({ ...ctx, input: user });
 };
 
@@ -25,7 +24,6 @@ export const getByEmail = (ctx) => {
 };
 export const checkIfConfirmed = (ctx) => {
   const { globals: { models: { users } }, input: { id } } = ctx;
-  // console.log('checkIfConfirmed'); // eslint-disable-line
   return users.load(id).then(user => {
     if (user.confirmed) {
       const { config: { httpCode: { error } } } = ctx.globals;
@@ -36,7 +34,6 @@ export const checkIfConfirmed = (ctx) => {
 };
 
 export const sendConfirmEmail = (ctx) => {
-  // console.log('sendConfirmEmail'); // eslint-disable-line
   if (process.env.NODE_ENV === 'testing') return Promise.resolve(ctx);
   const {
     input: { email },
@@ -63,7 +60,7 @@ export const checkAuth = (ctx) => {
   if (!matchaToken) return Promise.reject({ status: Unauthorized });
   const tokenDataDecoded = jwt.verify(matchaToken, secretSentence);
   if (!tokenDataDecoded) return Promise.reject({ status: Unauthorized });
-  return Promise.resolve({ ...ctx, input: { id: tokenDataDecoded.sub } });
+  return Promise.resolve({ ...ctx, input: { ...ctx.input, id: tokenDataDecoded.sub } });
 };
 
 export const getInfoToUpdate = (ctx) => {

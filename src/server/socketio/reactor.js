@@ -1,6 +1,5 @@
 import debug from 'debug';
 import jwt from 'jsonwebtoken';
-// import R from 'ramda';
 
 const logger = debug('matcha:socketio');
 
@@ -44,6 +43,7 @@ const getUserFromToken = (ctx) => {
   return users.load(dataDecoded.sub).then(user => ({ ...ctx, user }));
 };
 
+
 class Reactor {
   constructor(evtx, io, secretKey, users) {
     this.io = io;
@@ -73,8 +73,11 @@ class Reactor {
 
   getConnectedUsers() {
     logger('getConnectedUsers');
-    logger(this.sockets); // only id name
-    return this.sockets;
+    const usersConnected = [];
+    Object.values(this.sockets).forEach(user => {
+      usersConnected.push(user.id);
+    });
+    return usersConnected;
   }
 
   initEvtX() {
@@ -88,11 +91,11 @@ class Reactor {
     io.on('connection', (socket) => {
       socket.on('action', (message) => {
         logger(`receive ${message.type} action`);
-        const localCtx = { io, socket };
+        const usersConnected = this.getConnectedUsers();
+        const localCtx = { io, socket, usersConnected };
         evtx.run(message, localCtx)
           .then((res) => {
             socket.emit('action', res);
-            // this.getConnectedUsers();
             logger(`sent ${res.type} action`);
           })
           .catch((err) => {

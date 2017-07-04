@@ -9,7 +9,7 @@ import run from '../run';
 import config from '../../../config';
 import addFakeAccounts from '../postgres/__test__/addFakeAccounts';
 
-describe.only('functional', () => {
+describe('functional', () => {
   before(function () {
     return run(config)
       .then((ctx) => {
@@ -202,15 +202,36 @@ describe.only('functional', () => {
       to: this.kylieId,
     };
     const message = {
-      type: 'likes:add',
+      type: 'likes:addLike',
       payload: data,
       matchaToken: this.allanToken,
       replyTo: 'pong',
     };
     const io = socketIOClient.connect(this.url);
     io.emit('action', message);
-    io.on('action', res => {
-      console.log(res);
+    io.on('action', ({ payload }) => {
+      should(Number(payload.to_user)).eql(this.kylieId);
+      should(Number(payload.from_user)).eql(this.allanId);
+      done();
+    });
+  });
+
+  it('should remove likes', function (done) {
+    const data = {
+      from: this.allanId,
+      to: this.kylieId,
+    };
+    const message = {
+      type: 'likes:unLike',
+      payload: data,
+      matchaToken: this.allanToken,
+      replyTo: 'pong',
+    };
+    const io = socketIOClient.connect(this.url);
+    io.emit('action', message);
+    io.on('action', ({ payload }) => {
+      should(Number(payload.to_user)).eql(this.kylieId);
+      should(Number(payload.from_user)).eql(this.allanId);
       done();
     });
   });

@@ -1,15 +1,14 @@
 const query = `CREATE TABLE IF NOT EXISTS likes (
   id SERIAL PRIMARY KEY,
-  toUser VARCHAR NOT NULL,
-  fromUser VARCHAR NOT NULL,
-  date DATE,
+  to_user NUMERIC NOT NULL,
+  from_user NUMERIC NOT NULL,
+  date NUMERIC,
   push BOOLEAN DEFAULT FALSE
-);
-ALTER SEQUENCE likes_id_seq RESTART WITH 1`;
+);`;
 
 const loadSchema = (ctx) => {
   const { db } = ctx;
-  return db.none(query).then(() => ctx);
+  return db.any(query).then(() => ctx);
 };
 
 export default loadSchema;
