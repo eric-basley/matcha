@@ -31,7 +31,6 @@ const service = {
 
   delete({ id }) {
     const { models: { users } } = this.globals;
-
     return users.delete(Number(id));
   },
 

@@ -43,13 +43,13 @@ const getUserFromToken = (ctx) => {
   return users.load(dataDecoded.sub).then(user => ({ ...ctx, user }));
 };
 
-
 class Reactor {
-  constructor(evtx, io, secretKey, users) {
+  constructor(evtx, io, secretKey, users, likes) {
     this.io = io;
     this.secretKey = secretKey;
     this.evtx = evtx;
     this.users = users;
+    this.likes = likes;
     this.sockets = {};
     this.initModels();
     this.initEvtX();
@@ -67,8 +67,18 @@ class Reactor {
       logger(`user ${user.firstname} logged out`);
       delete this.sockets[socket.id];
     };
+    const addLike = ({ from, to, push }) => {
+      logger(from, to, push);
+    };
+
+    const unLike = ({ from, to }) => {
+      logger(from, to);
+    };
+
     this.users.on('login', registerUser);
     this.users.on('logout', logoutUser);
+    this.likes.on('addLike', addLike);
+    this.likes.on('unLike', unLike);
   }
 
   getConnectedUsers() {
@@ -110,8 +120,8 @@ class Reactor {
   }
 }
 
-const init = ((evtx, io, secretKey, users) => {
-  const reactor = new Reactor(evtx, io, secretKey, users);
+const init = ((evtx, io, secretKey, users, likes) => {
+  const reactor = new Reactor(evtx, io, secretKey, users, likes);
   return Promise.resolve({ getConnectedUsers() { return reactor.getConnectedUsers(); } });
 });
 
