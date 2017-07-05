@@ -1,6 +1,6 @@
 import debug from 'debug';
 import jwt from 'jsonwebtoken';
-import R from 'ramda';
+// import R from 'ramda';
 
 const logger = debug('matcha:socketio:reactor');
 
@@ -80,13 +80,11 @@ class Reactor {
   }
 
   getConnectedUsers() {
-    // logger('getConnectedUsers');
+    logger('getConnectedUsers');
     const usersConnected = [];
-    // logger(this.sockets);
     Object.values(this.sockets).forEach(user => {
       usersConnected.push(user.id);
     });
-    // logger(usersConnected);
     return usersConnected;
   }
 
@@ -100,9 +98,6 @@ class Reactor {
     const { evtx, io } = this;
     io.on('connection', (socket) => {
       socket.on('action', (message) => {
-        // logger(`receive ${message.type} action`);
-        // const getConnectedUsers = () => this.getConnectedUsers();
-        // const usersConnected = getConnectedUsers();
         const localCtx = { io, socket, usersConnected: this.getConnectedUsers.bind(this) };
         evtx.run(message, localCtx)
           .then((res) => {
