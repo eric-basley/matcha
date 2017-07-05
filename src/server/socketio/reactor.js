@@ -7,7 +7,6 @@ const formatServiceMethod = (ctx) => {
   const { service, method, message: { type, payload } } = ctx;
   if (service && method) return Promise.resolve(ctx);
   const [serv, meth] = type.split(':');
-  // console.log(payload, serv, meth);
   return Promise.resolve({
     ...ctx,
     input: payload,
@@ -36,7 +35,6 @@ const getToken = (ctx) => {
 
 const getUserFromToken = (ctx) => {
   const { globals: { config: { secretSentence }, models: { users } }, matchaToken } = ctx;
-  // const { config: { httpCode: { Unauthorized } } } = ctx.globals;
   if (!matchaToken) return Promise.resolve(ctx);
   const dataDecoded = jwt.verify(matchaToken, secretSentence);
   if (!dataDecoded) return Promise.resolve(ctx);

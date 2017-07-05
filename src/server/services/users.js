@@ -1,7 +1,8 @@
 import R from 'ramda';
 import bcrypt from 'bcrypt-as-promised';
 import jwt from 'jsonwebtoken';
-import { validateRegisterForm, getIp, getLocalisation, checkAuth, getInfoToUpdate, sendConfirmEmail, getToken, getByEmail } from './hooks';
+import { validateLoginForm, validateRegisterForm, getIp,
+  getLocalisation, checkAuth, getInfoToUpdate, sendConfirmEmail, getToken, getByEmail } from './hooks';
 import { loadProfil, filterBySexeAge, cleanUser, sortGeoLoc } from './hooks/suggestion';
 
 const service = {
@@ -51,7 +52,7 @@ const init = (evtx) => evtx
   .service(service.name)
   .before({
     logout: [checkAuth],
-    login: [getByEmail],
+    login: [validateLoginForm, getByEmail],
     suggestion: [checkAuth, loadProfil, filterBySexeAge, cleanUser, sortGeoLoc],
     get: [checkAuth],
     post: [validateRegisterForm, getIp, getLocalisation],

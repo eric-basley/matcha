@@ -1,13 +1,23 @@
 import jwt from 'jsonwebtoken';
 import Joi from 'joi';
 import geoip from 'geoip-lite';
-import schemaRegister from './schema';
+import { schemaRegister, schemaLogin } from '../../../lib/validator';
 import mailer from '../../http/mailer';
 
 export const validateRegisterForm = (ctx) => {
   const { input } = ctx;
   const user = input;
   if (Joi.validate(user, schemaRegister).error) {
+    const { config: { httpCode: { BadRequest } } } = ctx.globals;
+    return Promise.reject({ status: BadRequest });
+  }
+  return Promise.resolve({ ...ctx, input: user });
+};
+
+export const validateLoginForm = (ctx) => {
+  const { input } = ctx;
+  const user = input;
+  if (Joi.validate(user, schemaLogin).error) {
     const { config: { httpCode: { BadRequest } } } = ctx.globals;
     return Promise.reject({ status: BadRequest });
   }
