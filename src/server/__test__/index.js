@@ -210,6 +210,7 @@ describe('functional', () => {
     const io = socketIOClient.connect(this.url);
     io.emit('action', message);
     io.on('action', ({ payload }) => {
+      console.log(payload);
       should(Number(payload.to_user)).eql(this.kylieId);
       should(Number(payload.from_user)).eql(this.allanId);
       done();

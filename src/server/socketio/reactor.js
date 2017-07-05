@@ -1,7 +1,8 @@
 import debug from 'debug';
 import jwt from 'jsonwebtoken';
+import R from 'ramda';
 
-const logger = debug('matcha:socketio');
+const logger = debug('matcha:socketio:reactor');
 
 const formatServiceMethod = (ctx) => {
   const { service, method, message: { type, payload } } = ctx;
@@ -57,7 +58,6 @@ class Reactor {
 
   initModels() {
     const registerUser = ({ user, socket }) => {
-      // console.log(socket);
       logger(`user ${user.firstname} logged in socket.id = ${socket.id}`);
       this.sockets[socket.id] = user;
     };
@@ -80,11 +80,13 @@ class Reactor {
   }
 
   getConnectedUsers() {
-    logger('getConnectedUsers');
+    // logger('getConnectedUsers');
     const usersConnected = [];
+    // logger(this.sockets);
     Object.values(this.sockets).forEach(user => {
       usersConnected.push(user.id);
     });
+    // logger(usersConnected);
     return usersConnected;
   }
 
@@ -98,13 +100,14 @@ class Reactor {
     const { evtx, io } = this;
     io.on('connection', (socket) => {
       socket.on('action', (message) => {
-        logger(`receive ${message.type} action`);
-        const usersConnected = this.getConnectedUsers();
-        const localCtx = { io, socket, usersConnected };
+        // logger(`receive ${message.type} action`);
+        // const getConnectedUsers = () => this.getConnectedUsers();
+        // const usersConnected = getConnectedUsers();
+        const localCtx = { io, socket, usersConnected: this.getConnectedUsers.bind(this) };
         evtx.run(message, localCtx)
           .then((res) => {
             socket.emit('action', res);
-            logger(`sent ${res.type} action`);
+            // logger(`sent ${res.type} action`);
           })
           .catch((err) => {
             let res = {};
