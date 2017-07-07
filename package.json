@@ -15,7 +15,7 @@
     "reset:data": "cross-env NODE_ENV=testing DEBUG=matcha* babel-node ./scripts/reset_data",
     "srv:test": "cross-env NODE_ENV=testing DEBUG=matcha* mocha --require babel-core/register --reporter spec \"./src/server/**/__test__/*.js\" ",
     "client:test": "cross-env NODE_ENV=testing mocha --require ignore-styles --require babel-core/register --reporter spec \"./src/client/**/__test__/*.js\" ",
-    "coverage": "cross-env NODE_ENV=testing nyc yarn test",
+    "coverage": "cross-env NODE_ENV=testing nyc yarn srv:test",
     "build:prod": "cross-env NODE_ENV=production webpack -p --config webpack.config.js --progress",
     "build:dev": "cross-env NODE_ENV=development webpack-dev-server --progress --config webpack.config.js",
     "bundle:stats": "cross-env NODE_ENV=production webpack -p --config webpack.config.js --profile --json > stats.json",
