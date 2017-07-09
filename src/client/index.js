@@ -1,20 +1,19 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import configureStore from './store';
-import Authors from './authors/container';
+import Auth from './auth/container';
+// import Authors from './authors/container';
 
 const initialState = {};
 const store = configureStore(initialState);
 
 const App = () => (
   <Provider store={store}>
-    <div className="app">
-      <div className="app--content">
-        Hello matcha world!
-        <Authors />
-      </div>
-    </div>
+    <Router>
+      <Route path="/auth" component={Auth} />
+    </Router>
   </Provider>
 );
 
