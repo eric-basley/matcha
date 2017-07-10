@@ -1,0 +1,31 @@
+.home-container {
+  display: flex;
+  font-family: 'Roboto', sans-serif;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.register-container {
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(246, 71, 71);
+}
+
+.register-form-container input {
+
+}
+
+.tagsField {
+  max-width: 160px;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  cursor: default;
+  justify-content:space-around;
+}
+.tagField {
+  user-select: none;
+  decoration: none;
+
+}

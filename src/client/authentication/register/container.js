@@ -1,14 +1,13 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import Auth from './auth-view';
 import { addUser } from './actions';
+import View from './view';
 
 const mapStateToProps = createStructuredSelector({
-
 });
 
 const mapDispatchToProps = {
   addUser,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(View);

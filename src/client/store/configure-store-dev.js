@@ -7,7 +7,7 @@ const configureStore = (initialState) => (
   createStore(
     rootReducer,
     initialState,
-    compose(applyMiddleware(thunk, createLogger({duration: true, timestamp: false, collapsed: true })))
+    compose(applyMiddleware(thunk, createLogger({ duration: true, timestamp: false, collapsed: true }))),
   )
 );
 
