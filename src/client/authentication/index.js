@@ -1,3 +1,3 @@
-import Author from './view';
+import View from './view';
 
-export default Author;
+export default View;
