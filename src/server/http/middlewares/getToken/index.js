@@ -1,5 +1,5 @@
 const getToken = () => (req, res, next) => {
-  const token = req.query.matchaToken;
+  const token = req.query.matchaToken || req.body.matchaToken;
   req.matchaToken = token;
   next();
 };

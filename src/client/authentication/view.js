@@ -5,6 +5,7 @@ import './auth.css';
 import Login from './login';
 import Register from './register';
 import ResetPassword from './resetPassword';
+import ForgetPassword from './forgetPassword';
 import AboutMe from './aboutme';
 
 const Authentication = ({ match: { path } }) => (
@@ -13,6 +14,7 @@ const Authentication = ({ match: { path } }) => (
     <Route path={`${path}/register`} component={Register} />
     <Route path={`${path}/about_me`} component={AboutMe} />
     <Route path={`${path}/reset_password`} component={ResetPassword} />
+    <Route path={`${path}/forget_password`} component={ForgetPassword} />
   </div>
 );
 

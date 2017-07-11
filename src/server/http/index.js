@@ -3,6 +3,7 @@ import http from 'http';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import logger from 'morgan-debug';
+import cors from 'cors';
 import sendTokenResetPassword from './sendTokenResetPassword';
 import { errors, checkToken, getToken, getUser } from './middlewares';
 import resetPassword from './resetPassword';
@@ -16,13 +17,14 @@ const init = (ctx) => {
   const promise = new Promise(resolve => {
     const httpServer = http.createServer(app);
     app
+      .use(cors())
       .use(compression())
       .use(bodyParser.json(), bodyParser.urlencoded({ extended: true }))
       .use(logger('matcha:http', 'dev'))
       .use('/ping', (req, res) => res.json({ ping: 'pong' }))
       .get('/confirm_email', getToken(), getUser(ctx.config), confirmEmail())
       .get('/lost_password', sendTokenResetPassword(ctx))
-      .post('/reset_password', checkToken, resetPassword)
+      .post('/reset_password', getToken(), checkToken, resetPassword)
       .use(errors());
 
     httpServer.listen(port, host, () => {

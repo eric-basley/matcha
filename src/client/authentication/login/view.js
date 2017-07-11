@@ -23,14 +23,17 @@ class View extends Component {
   render() {
     const { login, password } = this.state;
     return (
-      <div className="register-container">
-        <form className="register-form-container" onSubmit={this.handleSubmit} onChange={this.handleChange}>
-          <h2>Login</h2>
-          <p><input type="text" name="login" placeholder="Login" value={login} /></p>
-          <p><input type="password" name="password" placeholder="Password" value={password} /></p>
-          <button type="submit">Login!</button>
-          <NavLink to="reset_password">Mot de passe oublié ?</NavLink>
-        </form>
+      <div>
+        <div className="navbar-top-right"><NavLink to="register" className="button">Pas encore Membre?</NavLink></div>
+        <div className="register-container">
+          <form className="register-form-container" onSubmit={this.handleSubmit} onChange={this.handleChange}>
+            <h2>Login</h2>
+            <input className="input--text" type="text" name="login" placeholder="Login" value={login} />
+            <input className="input--text" type="password" name="password" placeholder="Password" value={password} />
+            <button type="submit" className="button">Login!</button><br />
+            <NavLink to="forget_password" className="second--button">Mot de passe oublié ?</NavLink>
+          </form>
+        </div>
       </div>
     );
   }
