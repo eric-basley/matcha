@@ -18,11 +18,9 @@ export const ifCanLike = (ctx) => {
 
 export const ifConnected = (ctx) => {
   const { input: { to }, locals: { usersConnected } } = ctx;
-  const ok = usersConnected();
-  console.log(ok);
-  return Promise.resolve(ctx);
-  // if (R.indexOf(to, usersConnected) < 0) {
-  //   return Promise.resolve({ ...ctx, input: { ...ctx.input, push: false } });
-  // }
-  // return Promise.resolve({ ...ctx, input: { ...ctx.input, push: true } });
+  const listUsersConnected = usersConnected();
+  if (R.indexOf(to, listUsersConnected) < 0) {
+    return Promise.resolve({ ...ctx, input: { ...ctx.input, push: false } });
+  }
+  return Promise.resolve({ ...ctx, input: { ...ctx.input, push: true } });
 };

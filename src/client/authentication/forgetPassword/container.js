@@ -13,7 +13,7 @@ const ForgetPasswordView = (() => {
       },
     })
     .then((res) => {
-      console.log(res);
+      console.log(res); // eslint-disable-line
     });
   };
   return (

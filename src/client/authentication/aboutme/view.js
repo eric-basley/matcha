@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import R from 'ramda';
 import { PropTypes } from 'prop-types';
-import { NavLink } from 'react-router-dom';
 import '../auth.css';
 
 class View extends Component {
@@ -38,9 +36,6 @@ class View extends Component {
     }
   };
 
-  handleDelete = () => {
-  };
-
   handleSubmit = (evt) => {
     evt.preventDefault();
     const { updateUser } = this.props;
@@ -61,11 +56,11 @@ class View extends Component {
           <label htmlFor="homosexual" className="float-left  label-radio">Homosexual</label>
           <input id="bisexual" type="radio" name="orientation" value="bisexual" onClick={this.handleChange} className="float-left" />
           <label htmlFor="bisexual" className="float-left  label-radio">Bisexual</label><br />
-          <textarea name="bio" rows="3" cols="30" maxLength="1000" placeholder="Tell us something about You" value={bio} className="textarea"/>
+          <textarea name="bio" rows="3" cols="30" maxLength="1000" placeholder="Tell us something about You" value={bio} className="textarea" />
           <input type="text" className="input--text" name="interest" placeholder="Tags" onKeyUp={this.addInterest} value={tag} />
           <ul className="tagsField">
             {interest.map(elm => (
-              <div className="tagField" onClick={this.handleDelete(elm)} value={elm} key={elm}>#{elm}</div>
+              <div className="tagField" value={elm} key={elm}>#{elm}</div>
             ))}
           </ul>
           <label htmlFor="file" className="label-file">Choisir une photo de profil</label>
