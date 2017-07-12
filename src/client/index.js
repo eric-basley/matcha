@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import configureStore from './store';
-import Root from './root';
+// import Root from './root';
 import Authentication from './authentication';
 import Suggestion from './suggestion';
 import UserProfile from './userprofile';
@@ -16,11 +16,11 @@ const App = () => (
   <Provider store={store}>
     <Router>
       <div>
-        {/*<Route path="/" component={Root} />*/}
+        {/* <Route path="/" component={Root} /> */}
         <Route path="/auth" component={Authentication} />
         <Route path="/suggestion" component={Suggestion} />
         <Route path="/user/:id" component={UserProfile} />
-        {/*<Route path="/home" component={Home} /> */}
+        {/* <Route path="/home" component={Home} /> */}
       </div>
     </Router>
   </Provider>
