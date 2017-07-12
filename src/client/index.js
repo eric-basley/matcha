@@ -6,6 +6,7 @@ import configureStore from './store';
 import Root from './root';
 import Authentication from './authentication';
 import Suggestion from './suggestion';
+import UserProfile from './userprofile';
 // import Authors from './authors/container';
 
 const initialState = {};
@@ -18,7 +19,8 @@ const App = () => (
         {/*<Route path="/" component={Root} />*/}
         <Route path="/auth" component={Authentication} />
         <Route path="/suggestion" component={Suggestion} />
-        {/* <Route path="/home" component={Home} /> */}
+        <Route path="/user/:id" component={UserProfile} />
+        {/*<Route path="/home" component={Home} /> */}
       </div>
     </Router>
   </Provider>
