@@ -1,3 +1,3 @@
-import Login from './container';
+import Suggestion from './container';
 
-export default Login;
+export default Suggestion;
