@@ -169,9 +169,9 @@ describe('functional', () => {
     };
     const io = socketIOClient.connect(this.url);
     io.emit('action', message);
-    io.on('action', ({ payload }) => {
-      this.allanToken = payload;
-      should(payload).type('string');
+    io.on('action', ({ payload: { matchaToken } }) => {
+      this.allanToken = matchaToken;
+      should(matchaToken).type('string');
       done();
     });
   });
@@ -188,9 +188,9 @@ describe('functional', () => {
     };
     const io = socketIOClient.connect(this.url);
     io.emit('action', message);
-    io.on('action', ({ payload }) => {
-      this.kylieToken = payload;
-      should(payload).type('string');
+    io.on('action', ({ payload: { matchaToken } }) => {
+      this.kylieToken = matchaToken;
+      should(matchaToken).type('string');
       done();
     });
   });
@@ -232,6 +232,23 @@ describe('functional', () => {
     io.on('action', ({ payload }) => {
       should(Number(payload.to_user)).eql(this.kylieId);
       should(Number(payload.from_user)).eql(this.allanId);
+      done();
+    });
+  });
+
+  // suggestion
+
+    it('should load a list of users // suggestion ', function (done) {
+    const message = {
+      type: 'users:suggestion',
+      payload: { },
+      matchaToken: this.allanToken,
+      replyTo: 'suggestion',
+    };
+    const io = socketIOClient.connect(this.url);
+    io.emit('action', message);
+    io.on('action', ({ payload }) => {
+      should(R.length(payload)).eql(15);
       done();
     });
   });

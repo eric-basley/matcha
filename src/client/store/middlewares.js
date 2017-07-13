@@ -29,7 +29,6 @@ export const socketIoMiddleWare = socket => ({ dispatch, getState }) => {
       const params = ['action', message];
       const { callback } = action;
       if (callback) params.push(callback);
-      console.log(params);
       socket.emit(...params);
     }
     return next(action);
@@ -37,6 +36,5 @@ export const socketIoMiddleWare = socket => ({ dispatch, getState }) => {
 };
 
 export const logMiddleware = (store) => (next) => (action) => {
-  console.log('logMiddleware');
   return next(action);
 };

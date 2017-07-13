@@ -98,18 +98,18 @@ class Reactor {
     const { evtx, io } = this;
     io.on('connection', (socket) => {
       socket.on('action', (message) => {
-        logger(message);
+        // logger(message);
         logger(`receive ${message.type} action`);
         const localCtx = { io, socket, usersConnected: this.getConnectedUsers.bind(this) };
         evtx.run(message, localCtx)
           .then((res) => {
             logger(`sent ${res.type} action`);
             socket.emit('action', res);
-            console.log(res);
+            // console.log(res);
           })
           .catch((err) => {
             let res = {};
-            console.error(err);
+            // console.error(err);
             if (!err.status) {
               res = { details: err.detail, routine: err.routine };
             } else res = { status: err.status };

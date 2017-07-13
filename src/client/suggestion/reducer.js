@@ -1,13 +1,13 @@
-import { SUGGESTION_USER } from './actions';
+import { USER_SUGGESTED } from './actions';
 
 const initialState = {
+  listUser: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SUGGESTION_USER:
-      return state;
-    default:
-      return state;
-  }
+      case USER_SUGGESTED:
+        return { ...state, listUser: action.payload.listUser };
+      default: return state;
+    }
 };

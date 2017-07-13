@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import listUser from '../suggestion/reducer';
 // import addUser from '../authentication/register/reducer';
 
 const rootReducer = combineReducers({
@@ -8,12 +9,7 @@ const rootReducer = combineReducers({
         return state;
     }
   },
-  // listUser: (state = {}, action) => {
-  //   switch (action.type) {
-  //     case SUGGESTION_USER:
-  //       return { ...state, listUser: action.payload.listUser};
-  //   }
-  // }
+  listUser,
 });
 
 export default rootReducer;

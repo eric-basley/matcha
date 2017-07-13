@@ -3,7 +3,8 @@ import bcrypt from 'bcrypt-as-promised';
 import jwt from 'jsonwebtoken';
 import { validateLoginForm, validateRegisterForm, getIp,
   getLocalisation, checkAuth, getInfoToUpdate, sendConfirmEmail, getToken, getByEmail } from './hooks';
-import { loadProfil, filterBySexeAge, cleanUser, sortGeoLoc } from './hooks/suggestion';
+import { loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers } from './hooks/suggestion';
+
 
 const service = {
   name: 'users',
@@ -45,6 +46,13 @@ const service = {
     const { models: { users } } = this.globals;
     return users.update(infoToUpdate, Number(id));
   },
+
+  suggestion({ users }) {
+    return Promise.resolve({ listUser: users });
+  },
+  // updateImage() {
+  //
+  // }
 };
 
 const init = (evtx) => evtx
@@ -53,7 +61,7 @@ const init = (evtx) => evtx
   .before({
     logout: [checkAuth],
     login: [validateLoginForm, getByEmail],
-    suggestion: [checkAuth, loadProfil, filterBySexeAge, cleanUser, sortGeoLoc],
+    suggestion: [checkAuth, loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers],
     get: [checkAuth],
     post: [validateRegisterForm, getIp, getLocalisation],
     put: [checkAuth, getInfoToUpdate],

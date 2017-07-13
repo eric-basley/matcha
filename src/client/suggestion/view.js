@@ -4,9 +4,6 @@ import { PropTypes } from 'prop-types';
 import './suggestion.css';
 
 class View extends Component {
-  state = {
-
-  };
 
   componentWillMount() {
     const { suggestionUser } = this.props;
@@ -18,12 +15,14 @@ class View extends Component {
   }
 
   render() {
+    const { listUser } = this.props;
+    console.log(listUser);
     return (
       <div>
         <div className="navbar-top-right"><NavLink to="continue" className="button">Continue</NavLink></div>
         <h2 className="bold center">Some profile you may like</h2>
         <div className="container-suggestion">
-          <div className="suggestion-box " onClick={this.click} role="button" tabIndex="0">
+          {/* <div className="suggestion-box " onClick={this.click} role="button" tabIndex="0">
             <img src="./profile-picture-1.png" alt="profile--1" className="picture--suggestion" />
             <div className="name-bio-suggestion"><span className="bold">Mathilde</span>, 26</div>
             <div className="name-bio-suggestion">Tell me about you...</div>
@@ -97,7 +96,7 @@ class View extends Component {
             <img src="./profile-picture-1.png" alt="profile--1" className="picture--suggestion" />
           <div className="name-bio-suggestion"><span className="bold">Mathilde</span>, 26</div>
             <div className="name-bio-suggestion">Tell me about you...</div>
-          </div>
+          </div> */}
         </div>
       </div>
     );
