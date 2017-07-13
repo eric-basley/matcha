@@ -1,16 +1,27 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import socketIO from 'socket.io-client';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import configureStore from './store';
-// import Root from './root';
 import Authentication from './authentication';
 import Suggestion from './suggestion';
 import UserProfile from './userprofile';
+// import Root from './root';
 // import Authors from './authors/container';
 
-const initialState = {};
-const store = configureStore(initialState);
+const url = 'http://127.0.0.1:3004';
+const io = socketIO.connect(url);
+io.on('disconnect', () => console.log('socket.io disconnected ...')); // eslint-disable-line no-console
+io.on('error', err => console.log(`socket.io error: ${err}`)); // eslint-disable-line no-console
+io.on('connect', () => console.log('socket.io connected.')); // eslint-disable-line no-console
+
+const matchaToken = localStorage.getItem('matchaToken');
+const initialState = {
+  login: { matchaToken },
+};
+
+const store = configureStore(initialState, io);
 
 const App = () => (
   <Provider store={store}>

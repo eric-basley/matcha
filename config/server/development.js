@@ -22,7 +22,7 @@ module.exports = {
   configPgp: {
   },
   routes: {
-    confirmEmail: '/api/confirm_email',
+    confirmEmail: '/confirm_email',
     resetPassword: '/api/reset_password',
   },
 };

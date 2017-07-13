@@ -22,7 +22,7 @@ describe('functional', () => {
         this.ctx = ctx;
         this.allanId = 0;
         this.kylieId = 0;
-        this.url = url;
+        this.url = url;   
         this.matchaToken = '';
         this.allanToken = '';
         this.kylieToken = '';
@@ -72,7 +72,7 @@ describe('functional', () => {
     const message = {
       type: 'users:post',
       payload: user,
-      replyTo: 'post',
+      replyTo: 'addedUser',
     };
     const io = socketIOClient.connect(this.url);
     io.emit('action', message);
@@ -165,7 +165,7 @@ describe('functional', () => {
     const message = {
       type: 'users:login',
       payload: data,
-      replyTo: 'put',
+      replyTo: 'loggedUser',
     };
     const io = socketIOClient.connect(this.url);
     io.emit('action', message);

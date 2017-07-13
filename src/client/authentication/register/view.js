@@ -38,10 +38,10 @@ class View extends Component {
             <input className="input--text" type="text" name="firstname" placeholder="First Name" value={firstname} />
             <input className="input--text" type="text" name="lastname" placeholder="Last Name" value={lastname} />
             <input className="input--text" type="number" name="age" placeholder="Age" value={age} min="18" max="99" />
-            <input id="male" type="radio" name="sexe" value="male" onClick={this.handleChange} className="float-left" />
-            <label htmlFor="male" className="float-left">Male</label>
-            <input id="female" type="radio" name="sexe" value="female" onClick={this.handleChange} className="float-right" />
-            <label htmlFor="female" className="float-right">Female</label><br />
+            <input id="men" type="radio" name="sexe" value="men" onClick={this.handleChange} className="float-left" />
+            <label htmlFor="men" className="float-left">Men</label>
+            <input id="women" type="radio" name="sexe" value="women" onClick={this.handleChange} className="float-right" />
+            <label htmlFor="women" className="float-right">Women</label><br />
             <button type="submit" className="button">Inscription!</button>
           </form>
         </div>

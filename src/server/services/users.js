@@ -21,7 +21,7 @@ const service = {
       const token = jwt.sign({ sub: user.id }, secretSentence, { expiresIn });
       const { socket } = this.locals;
       users.emit('login', { user, socket });
-      return token;
+      return { matchaToken: token };
     });
   },
 
