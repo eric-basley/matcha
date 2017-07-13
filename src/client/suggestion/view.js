@@ -8,6 +8,11 @@ class View extends Component {
 
   };
 
+  componentWillMount() {
+    const { suggestionUser } = this.props;
+    suggestionUser();
+  }
+
   click = () => {
     console.log('click');
   }
