@@ -23,6 +23,6 @@ module.exports = {
   },
   routes: {
     confirmEmail: '/confirm_email',
-    resetPassword: '/api/reset_password',
+    resetPassword: '/reset_password',
   },
 };

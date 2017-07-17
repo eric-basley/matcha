@@ -11,11 +11,11 @@ const run = (config) => initPostgres({ config, startTime: new Date() }) // eslin
     .then(loadEventSchema)
     .then(initServices)
     .then(initHttp)
-    .then(initSocketIo)
+    .then(initSocketIo);
     // .then((ctx) => {
     //   const { users } = ctx.models;
     //   return users.deleteAll().then(() => ctx);
     // })
-    .then(addFakeAccounts);
+    // .then(addFakeAccounts);
 
 export default run;

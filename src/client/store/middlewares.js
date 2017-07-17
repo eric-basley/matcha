@@ -1,5 +1,5 @@
 import { CONNECTED_USER } from '../authentication/login/actions';
-
+import { push } from '../history';
 const EVTX_ERROR = 'EvtX:Error';
 
 export const socketIoMiddleWare = socket => ({ dispatch, getState }) => {
@@ -8,15 +8,13 @@ export const socketIoMiddleWare = socket => ({ dispatch, getState }) => {
     switch (action.type) {
       case CONNECTED_USER:
         localStorage.setItem('matchaToken', action.payload.matchaToken);
+        localStorage.setItem('id', action.payload.id);
         return dispatch(action);
-    //   case EVTX_ERROR:
-    //     switch (action.code) {
-    //       case 403:
-    //       case 401:
-    //         return push('/login');
-    //       default:
-    //         return dispatch(action);
-    //     }
+      case EVTX_ERROR:
+        switch (action.status) {
+          default:
+            return dispatch(action);
+        }
       default:
         return dispatch(action);
     }

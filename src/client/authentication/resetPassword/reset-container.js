@@ -11,7 +11,7 @@ class ResetPasswordView extends Component {
     const parsedQuery = queryString.parse(this.props.location.search);
     const { target: { password: { value } } } = evt;
     const data = { matchaToken: parsedQuery.matchaToken, password: value };
-    axios.post('http://127.0.0.1:3004/reset_password', { data })
+    axios.post('http://127.0.0.1:3004/reset_password', data)
     .then((res) => {
       console.log(res); // eslint-disable-line
     });

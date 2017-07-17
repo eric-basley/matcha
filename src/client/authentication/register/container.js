@@ -1,9 +1,12 @@
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { createStructuredSelector, createSelector } from 'reselect';
 import { addUser } from './actions';
 import View from './view';
 
+const getError = (state) => state.evtxError;
+
 const mapStateToProps = createStructuredSelector({
+  error: createSelector([getError], (state) => state.error),
 });
 
 const mapDispatchToProps = {

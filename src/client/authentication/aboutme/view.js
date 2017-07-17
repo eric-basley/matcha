@@ -1,24 +1,30 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import '../auth.css';
+import axios from 'axios';
 
 class View extends Component {
   state = {
     orientation: '',
     bio: '',
     tag: '',
-    img: '',
+    error: null,
+    canUpdate: false,
+    imgProfile: '',
     interest: [],
   };
 
   handleChange = ({ target: { value, name, files } }) => {
-    if (name === 'img') {
-      const fileReader = new FileReader();
-      const img = files[0];
-      fileReader.onloadend = () => {
-        this.setState({ img });
+    if (name === 'imgProfile') {
+      const file = files[0];
+      const _URL = window.URL || window.webkitURL;
+      const img = new Image();
+      img.onload = () => {
+        this.setState({ canUpdate: true });
+        this.setState({ imgProfile: file });
       };
-      fileReader.readAsDataURL(img);
+      img.onerror = () => this.setState({ error: 'not an image' });
+      img.src = _URL.createObjectURL(file);
     }
     if (name === 'interest') return this.setState({ tag: value });
     this.setState({ [name]: value });
@@ -38,14 +44,30 @@ class View extends Component {
 
   handleSubmit = (evt) => {
     evt.preventDefault();
-    const { updateUser } = this.props;
-    const { orientation, bio, interest: interestArray, img } = this.state;
+    const { updateUser, matchaToken } = this.props;
+    const { canUpdate, orientation, bio, interest: interestArray, imgProfile } = this.state;
     const interest = JSON.stringify(interestArray);
-    updateUser({ orientation, bio, interest, img });
+    if (canUpdate) {
+      const data = new FormData();
+      data.append('imgProfile', imgProfile);
+      data.append('matchaToken', matchaToken);
+      axios({
+        url: 'http://127.0.0.1:3004/add_img',
+        method: 'post',
+        data,
+        headers: {
+          'Content-type': 'multipart/form-data',
+        },
+      }).then(({ data }) => {
+        console.log(data);
+        console.log('about to connect');
+        updateUser({ orientation, bio, interest: interestArray });
+      }).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURRED' }));
+    }
   };
 
   render() {
-    const { bio, tag, interest, img } = this.state;
+    const { bio, tag, interest, imgProfile } = this.state;
     return (
       <div className="register-container">
         <div className="register-form-container" onChange={this.handleChange}>
@@ -64,8 +86,8 @@ class View extends Component {
             ))}
           </ul>
           <label htmlFor="file" className="label-file">Choisir une photo de profil</label>
-          <input id="file" name="img" className="input-file" type="file" accept="image/*" /><br />
-          { img && <button type="submit" onClick={this.handleSubmit} className="button" >Continue!</button> }
+          <input id="file" name="imgProfile" className="input-file" type="file" accept="image/*" /><br />
+          { imgProfile && <button type="submit" onClick={this.handleSubmit} className="button" >Continue!</button> }
         </div>
       </div>
     );
@@ -73,6 +95,7 @@ class View extends Component {
 }
 
 View.propTypes = {
+  matchaToken: PropTypes.string.isRequired,
   updateUser: PropTypes.func.isRequired,
 };
 

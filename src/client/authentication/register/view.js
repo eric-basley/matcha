@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import '../auth.css';
 
 class View extends Component {
   state = {
+    didRegistered: false,
     login: '',
     email: '',
     password: '',
@@ -19,15 +20,21 @@ class View extends Component {
   }
 
   handleSubmit = (evt) => {
+    const { error } = this.props;
+    console.log(error)
     evt.preventDefault();
     const { addUser } = this.props;
     const { login, email, password, firstname, lastname, sexe, age } = this.state;
     addUser({ login, email, password, firstname, lastname, sexe, age });
+
   };
+
   render() {
-    const { login, email, password, firstname, lastname, age } = this.state;
+    const { login, email, password, firstname, lastname, age, didRegistered } = this.state;
+    const { error } = this.props;
     return (
       <div>
+        {/*<RedirectLogin hasError={error} />*/}
         <div className="navbar-top-right"><NavLink to="login" className="button">Deja Membre?</NavLink></div>
         <div className="register-container">
           <form className="register-form-container" onSubmit={this.handleSubmit} onChange={this.handleChange}>

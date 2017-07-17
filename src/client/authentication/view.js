@@ -11,7 +11,7 @@ import AboutMe from './aboutme';
 const Authentication = ({ match: { path } }) => (
   <div className="home-container">
     <Route exact path={`${path}`} component={Login} />
-    <Route path={`${path}/login`} component={Login} />
+    <Route path={`${path}/login`} component={(props) => <Login {...props} />} />
     <Route path={`${path}/register`} component={Register} />
     <Route path={`${path}/about_me`} component={AboutMe} />
     <Route path={`${path}/reset_password`} component={ResetPassword} />

@@ -7,8 +7,11 @@ const logger = debug('matcha:socketio');
 const init = (ctx) => {
   const { http, services: { evtx }, config: { secretSentence }, models: { users, likes } } = ctx;
   const io = socketIo(http);
-  return initReactor(evtx, io, secretSentence, users, likes).then(() => {
+  return initReactor(evtx, io, secretSentence, users, likes).then(({ getConnectedUsers }) => {
     logger('socketIo is setup');
+    const ok = getConnectedUsers();
+
+    console.log(ok);
     return { ...ctx };
   });
 };

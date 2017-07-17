@@ -1,6 +1,7 @@
 import R from 'ramda';
 import bcrypt from 'bcrypt-as-promised';
 import jwt from 'jsonwebtoken';
+import geolib from 'geolib';
 import { validateLoginForm, validateRegisterForm, getIp,
   getLocalisation, checkAuth, getInfoToUpdate, sendConfirmEmail, getToken, getByEmail } from './hooks';
 import { loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers } from './hooks/suggestion';
@@ -22,15 +23,23 @@ const service = {
       const token = jwt.sign({ sub: user.id }, secretSentence, { expiresIn });
       const { socket } = this.locals;
       users.emit('login', { user, socket });
-      return { matchaToken: token };
+      return { matchaToken: token, id: user.id };
     });
   },
 
-  get({ id }) {
+  get({ id, user }) {
     const { models: { users } } = this.globals;
-    return users.load(Number(id)).then((user) => R.omit('password', user));
+    return users.load(Number(id)).then((userLoad) => R.omit('password', userLoad));
   },
 
+  getUser({ idUser, user }) {
+    const { models: { users } } = this.globals;
+    return users.load(Number(idUser)).then((userLoad) => {
+      const distance = geolib.getDistance({ latitude: userLoad.latitude, longitude: userLoad.longitude }, { latitude: user.latitude, longitude: user.longitude });
+      const userloaded = { ...userLoad, distance };
+      return R.omit('password', userloaded);
+    });
+  },
   delete({ id }) {
     const { models: { users } } = this.globals;
     return users.delete(Number(id));
@@ -38,7 +47,7 @@ const service = {
 
   post(user) {
     const { models: { users } } = this.globals;
-    return bcrypt.hash(user.password, 10)
+     return bcrypt.hash(user.password, 10)
     .then(hashedPassword => users.add(R.assoc('password', hashedPassword, user)));
   },
 
@@ -49,6 +58,10 @@ const service = {
 
   suggestion({ users }) {
     return Promise.resolve({ listUser: users });
+  },
+
+  isCheckAndConnected({ user }) {
+    return Promise.resolve({ user });
   },
   // updateImage() {
   //
@@ -63,9 +76,11 @@ const init = (evtx) => evtx
     login: [validateLoginForm, getByEmail],
     suggestion: [checkAuth, loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers],
     get: [checkAuth],
+    getUser: [checkAuth],
     post: [validateRegisterForm, getIp, getLocalisation],
     put: [checkAuth, getInfoToUpdate],
     delete: [getToken, checkAuth],
+    isCheckAndConnected: [getToken, checkAuth],
   })
   .after({
     post: [sendConfirmEmail],

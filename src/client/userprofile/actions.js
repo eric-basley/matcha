@@ -1,2 +1,3 @@
-export const USERS_GET = 'evtx:server:users:get';
-export const userGet = (user) => ({ type: USERS_GET, payload: user });
+export const USERS_GET = 'evtx:server:users:getUser';
+export const USER_LOADED = 'users:loaded';
+export const userGet = (id) => ({ type: USERS_GET, payload: id, replyTo: USER_LOADED });
