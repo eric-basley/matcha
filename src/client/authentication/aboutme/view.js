@@ -68,7 +68,7 @@ class View extends Component {
     return (
       <div className="register-container">
         <div className="register-form-container" onChange={this.handleChange}>
-          <h2>One more steps!</h2>
+          <h2>One more step!</h2>
           <input id="heterosexual" type="radio" name="orientation" value="heterosexual" onClick={this.handleChange} className="float-left" />
           <label htmlFor="heterosexual" className="float-left label-radio">Heterosexual</label>
           <input id="homosexual" type="radio" name="orientation" value="homosexual" onClick={this.handleChange} className="float-left" />
