@@ -18,7 +18,10 @@ io.on('connect', () => console.log('socket.io connected.')); // eslint-disable-l
 const matchaToken = localStorage.getItem('matchaToken');
 const id = localStorage.getItem('id');
 const initialState = {
-  login: { matchaToken, id },
+  login: {
+    matchaToken: null,
+    id: null,
+  },
 };
 
 const store = configureStore(initialState, io);

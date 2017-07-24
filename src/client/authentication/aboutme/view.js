@@ -92,8 +92,12 @@ class View extends Component {
 }
 
 View.propTypes = {
-  matchaToken: PropTypes.string.isRequired,
+  matchaToken: PropTypes.string,
   updateUser: PropTypes.func.isRequired,
+};
+
+View.defaultProps = {
+  matchaToken: null,
 };
 
 export default View;

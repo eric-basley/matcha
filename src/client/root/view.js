@@ -10,18 +10,18 @@ class Root extends Component {
   }
 
   render() {
-    const { user, connected, error, matchaToken } = this.props;
+    const { user, error, matchaToken } = this.props;
     const { pathname } = this.props.location;
-    if (error) return <div>{ alert('Error Happens') }</div>; //eslint-disable-line
+    if (error) return <div>{ alert('Error Happens') }</div>;
     // if (!user) return <Redirect to="/auth/register" />;
     if (!user) return <div>is Fetching...</div>;
     return (
       <div>
         { !user && !matchaToken && pathname.match(/^\/auth\/reset_password/) === null && <Redirect to="/auth/register" />}
         { !user.confirmed && <Redirect to="/auth/login" />}
-        { !connected && <Redirect to="/auth/login" />}
+        {/* { !connected && <Redirect to="/auth/login" />}
         { connected && !user.bio && <Redirect to="/auth/about_me" /> }
-        { connected && user.bio && <Redirect to="/suggestion" />}
+        { connected && user.bio && <Redirect to="/suggestion" />}*/}
       </div>
     );
   }
@@ -29,11 +29,14 @@ class Root extends Component {
 
 Root.propTypes = {
   user: PropTypes.object.isRequired,
-  connected: PropTypes.array.isRequired,
   error: PropTypes.bool.isRequired,
-  matchaToken: PropTypes.string.isRequired,
+  matchaToken: PropTypes.string,
   ifUserCheckConnected: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
+};
+
+Root.defaultProps = {
+  matchaToken: null,
 };
 
 export default Root;
