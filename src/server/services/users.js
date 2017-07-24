@@ -27,7 +27,7 @@ const service = {
     });
   },
 
-  get({ id, user }) {
+  get({ id }) {
     const { models: { users } } = this.globals;
     return users.load(Number(id)).then((userLoad) => R.omit('password', userLoad));
   },
@@ -35,7 +35,9 @@ const service = {
   getUser({ idUser, user }) {
     const { models: { users } } = this.globals;
     return users.load(Number(idUser)).then((userLoad) => {
-      const distance = geolib.getDistance({ latitude: userLoad.latitude, longitude: userLoad.longitude }, { latitude: user.latitude, longitude: user.longitude });
+      const distance = geolib.getDistance(
+        { latitude: userLoad.latitude, longitude: userLoad.longitude },
+        { latitude: user.latitude, longitude: user.longitude });
       const userloaded = { ...userLoad, distance };
       return R.omit('password', userloaded);
     });
@@ -47,7 +49,7 @@ const service = {
 
   post(user) {
     const { models: { users } } = this.globals;
-     return bcrypt.hash(user.password, 10)
+    return bcrypt.hash(user.password, 10)
     .then(hashedPassword => users.add(R.assoc('password', hashedPassword, user)));
   },
 
@@ -63,9 +65,7 @@ const service = {
   isCheckAndConnected({ user }) {
     return Promise.resolve({ user });
   },
-  // updateImage() {
-  //
-  // }
+
 };
 
 const init = (evtx) => evtx

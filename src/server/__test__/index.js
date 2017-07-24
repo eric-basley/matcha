@@ -38,9 +38,8 @@ describe('functional', () => {
     };
     const io = socketIOClient.connect(this.url);
     io.emit('action', message);
-    io.on('action', res => {
-      should(res.type).eql('pong');
-      should(res.payload).eql({ ping: 'pong' });
+    io.on('action', ({ payload }) => {
+      should(payload.ping).eql('pong');
       done();
     });
   });
@@ -248,9 +247,8 @@ describe('functional', () => {
     const io = socketIOClient.connect(this.url);
     io.emit('action', message);
     io.on('action', ({ payload }) => {
-      console.log(payload);
+      // console.log(payload);
       should(payload).type('object');
-      // should(R.length(payload)).eql(15);
       done();
     });
   });

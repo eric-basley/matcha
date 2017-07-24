@@ -4,13 +4,13 @@ import compression from 'compression';
 import bodyParser from 'body-parser';
 import logger from 'morgan-debug';
 import cors from 'cors';
+import path from 'path';
 import multer from 'multer';
 import sendTokenResetPassword from './sendTokenResetPassword';
-import { errors, checkToken, getToken, getUser, checkAuth, checkImgs } from './middlewares';
+import { errors, checkToken, getToken, getUser, checkAuth } from './middlewares';
 import resetPassword from './resetPassword';
 import confirmEmail from './confirmEmail';
 import addImg from './addImg';
-import path from 'path';
 
 const getUrl = server => `http://${server.address().address}:${server.address().port}`;
 
@@ -31,7 +31,9 @@ const init = (ctx) => {
     app
       .use(cors())
       .use(compression())
-      .post('/add_img', upload.fields([{ name: 'imgs', maxCount: 4 }, { name: 'imgProfile', maxCount: 1 }]), getToken(), checkAuth(secretSentence), addImg(users))
+       .post('/add_img',
+        upload.fields([{ name: 'imgs', maxCount: 4 }, { name: 'imgProfile', maxCount: 1 }]),
+        getToken(), checkAuth(secretSentence), addImg(users))
       .use(bodyParser.json(), bodyParser.urlencoded({ extended: true }))
       .use(logger('matcha:http', 'dev'))
       .use('/ping', (req, res) => res.json({ ping: 'pong' }))

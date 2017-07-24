@@ -1,6 +1,5 @@
 import debug from 'debug';
 import jwt from 'jsonwebtoken';
-// import R from 'ramda';
 
 const logger = debug('matcha:socketio:reactor');
 
@@ -104,11 +103,8 @@ class Reactor {
         evtx.run(message, localCtx)
           .then((res) => {
             const connected = this.getConnectedUsers();
-            if (res.type === 'isConnected')
-            {
-              console.log(res.payload.user);
-              if (connected.includes(res.payload.user.id))
-                return socket.emit('action', { ...res, payload: { ...res.payload, connected: true } });
+            if (res.type === 'isConnected') {
+              if (connected.includes(res.payload.user.id)) return socket.emit('action', { ...res, payload: { ...res.payload, connected: true } });
               return socket.emit('action', { ...res, payload: { ...res.payload, connected: false } });
             }
             logger(`sent ${res.type} action`);
@@ -117,7 +113,6 @@ class Reactor {
           })
           .catch((err) => {
             let res = {};
-            console.error(err);
             if (!err.status) {
               res = { status: err.detail, routine: err.routine };
             } else res = { status: err.status };

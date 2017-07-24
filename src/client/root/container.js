@@ -7,10 +7,11 @@ const getState = (state) => state.userInfo;
 const getStateError = (state) => state.evtxError;
 const getStateLogin = (state) => state.login;
 const mapStateToProps = createStructuredSelector({
-    matchaToken: createSelector([getStateLogin], (state) => state.matchaToken),
-    user: createSelector([getState], (state) => state.user),
-    connected: createSelector([getState], (state) => state.connected),
-    error: createSelector([getStateError], (state) => state.error),
+  matchaToken: createSelector([getStateLogin], (state) => state.matchaToken),
+  user: createSelector([getState], (state) => state.user),
+  connected: createSelector([getState], (state) => state.connected),
+  error: createSelector([getStateError], (state) => state.error),
+  didRequested: createSelector([getStateError], (state) => state.didRequested),
 });
 
 const mapDispatchToProps = {

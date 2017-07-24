@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import '../auth.css';
 import axios from 'axios';
+import '../auth.css';
 
 class View extends Component {
   state = {
@@ -45,23 +45,20 @@ class View extends Component {
   handleSubmit = (evt) => {
     evt.preventDefault();
     const { updateUser, matchaToken } = this.props;
-    const { canUpdate, orientation, bio, interest: interestArray, imgProfile } = this.state;
-    const interest = JSON.stringify(interestArray);
+    const { canUpdate, orientation, bio, interest, imgProfile } = this.state;
     if (canUpdate) {
-      const data = new FormData();
-      data.append('imgProfile', imgProfile);
-      data.append('matchaToken', matchaToken);
+      const formData = new FormData();
+      formData.append('imgProfile', imgProfile);
+      formData.append('matchaToken', matchaToken);
       axios({
         url: 'http://127.0.0.1:3004/add_img',
         method: 'post',
-        data,
+        data: formData,
         headers: {
           'Content-type': 'multipart/form-data',
         },
-      }).then(({ data }) => {
-        console.log(data);
-        console.log('about to connect');
-        updateUser({ orientation, bio, interest: interestArray });
+      }).then(() => {
+        updateUser({ orientation, bio, interest });
       }).catch(() => this.setState({ serverResponse: 'AN ERROR OCCURRED' }));
     }
   };

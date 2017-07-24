@@ -70,7 +70,6 @@ export const checkAuth = (ctx) => {
   if (!matchaToken) return Promise.reject({ status: Unauthorized });
   const tokenDataDecoded = jwt.verify(matchaToken, secretSentence);
   if (!tokenDataDecoded) return Promise.reject({ status: Unauthorized });
-  console.log(ctx.input);
   return Promise.resolve({ ...ctx, input: { idUser: ctx.input, id: tokenDataDecoded.sub, user: ctx.user } });
 };
 

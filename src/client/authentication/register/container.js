@@ -7,6 +7,7 @@ const getError = (state) => state.evtxError;
 
 const mapStateToProps = createStructuredSelector({
   error: createSelector([getError], (state) => state.error),
+  didRequested: createSelector([getError], (state) => state.didRequested),
 });
 
 const mapDispatchToProps = {

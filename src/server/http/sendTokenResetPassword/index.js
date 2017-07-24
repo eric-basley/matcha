@@ -8,7 +8,7 @@ const generateOneTimeToken = ({ config: { routes: { resetPassword } }, models: {
     const token = jwt.sign({ sub: user.id }, user.password);
     mailer(user.email,
       'Reset Password - Matcha',
-      `Registration Code: http://127.0.0.1:3001/auth/reset_password?matchaToken=${token}`);
+      `Registration Code: http://127.0.0.1:3001/auth/${resetPassword}?matchaToken=${token}`);
   }).catch(() => next({ status: 201 }));
 };
 

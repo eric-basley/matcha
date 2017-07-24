@@ -1,8 +1,5 @@
 import geolib from 'geolib';
-import debug from 'debug';
 import R from 'ramda';
-
-const logger = debug('matcha:hooks:suggestion');
 
 const whichSexe = (sexe, orientation) => {
   if (orientation === 'homosexual') return [sexe];

@@ -9,7 +9,7 @@ const query = `CREATE TABLE IF NOT EXISTS users (
   orientation VARCHAR DEFAULT 'bisexual',
   bio TEXT,
   age NUMERIC,
-  interest JSON,
+  interest TEXT,
   photo_1 VARCHAR,
   photo_2 VARCHAR,
   photo_3 VARCHAR,

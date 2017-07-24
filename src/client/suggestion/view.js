@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, Redirect} from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import './suggestion.css';
 
@@ -21,18 +21,17 @@ class View extends Component {
   render() {
     const { listUser } = this.props;
     const { redirect } = this.state;
-    console.log(redirect);
-    // console.log(this.props);
     return (
       <div>
-        { redirect && <Redirect push to={`user/` + redirect} /> }
+        { redirect && <Redirect push to={`user/${redirect}`} /> }
         <div className="navbar-top-right"><NavLink to="continue" className="button">Continue</NavLink></div>
         <h2 className="bold center">Some profile you may like</h2>
         <div className="container-suggestion">
           { listUser.map(user => (
             <div className="suggestion-box" onClick={this.handleClick} role="button" key={user.id} id={user.id}>
-              <img src={user.photo_5} alt="profile--1" className="picture--suggestion" id={user.id} />
-              <div className="name-bio-suggestion" id={user.id}><span className="bold" id={user.id}>{user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1)}</span>, {user.age}</div>
+              <img src="./picture1.png" alt="profile--1" className="picture--suggestion" id={user.id} />
+              <div className="name-bio-suggestion" id={user.id}>
+                <span className="bold" id={user.id}>{user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1)}</span>, {user.age}</div>
               <div className="name-bio-suggestion" id={user.id}>Tell me about you...</div>
             </div>
           ))}
@@ -43,7 +42,7 @@ class View extends Component {
 }
 
 View.propTypes = {
-  // user: PropTypes.user.isRequired,
+  listUser: PropTypes.array.isRequired,
   suggestionUser: PropTypes.func.isRequired,
 };
 

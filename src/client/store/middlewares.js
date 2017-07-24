@@ -1,5 +1,5 @@
 import { CONNECTED_USER } from '../authentication/login/actions';
-import { push } from '../history';
+
 const EVTX_ERROR = 'EvtX:Error';
 
 export const socketIoMiddleWare = socket => ({ dispatch, getState }) => {
@@ -25,14 +25,10 @@ export const socketIoMiddleWare = socket => ({ dispatch, getState }) => {
       const { login: { matchaToken } } = getState();
       const message = { ...action, type: action.type.slice(12), matchaToken };
       const params = ['action', message];
-      const { callback } = action;
-      if (callback) params.push(callback);
       socket.emit(...params);
     }
     return next(action);
   };
 };
 
-export const logMiddleware = (store) => (next) => (action) => {
-  return next(action);
-};
+export const logMiddleware = () => (next) => (action) => (next(action));

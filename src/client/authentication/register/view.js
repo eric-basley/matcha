@@ -5,7 +5,6 @@ import '../auth.css';
 
 class View extends Component {
   state = {
-    didRegistered: false,
     login: '',
     email: '',
     password: '',
@@ -20,21 +19,20 @@ class View extends Component {
   }
 
   handleSubmit = (evt) => {
-    const { error } = this.props;
-    console.log(error)
     evt.preventDefault();
     const { addUser } = this.props;
     const { login, email, password, firstname, lastname, sexe, age } = this.state;
     addUser({ login, email, password, firstname, lastname, sexe, age });
-
   };
 
   render() {
-    const { login, email, password, firstname, lastname, age, didRegistered } = this.state;
-    const { error } = this.props;
+    const { login, email, password, firstname, lastname, age } = this.state;
+    const { error, didRequested } = this.props;
+    let redirect = false;
+    if (!error && didRequested === true) redirect = true;
     return (
       <div>
-        {/*<RedirectLogin hasError={error} />*/}
+        { redirect === true && <Redirect to="login" />}
         <div className="navbar-top-right"><NavLink to="login" className="button">Deja Membre?</NavLink></div>
         <div className="register-container">
           <form className="register-form-container" onSubmit={this.handleSubmit} onChange={this.handleChange}>
@@ -58,6 +56,8 @@ class View extends Component {
 }
 
 View.propTypes = {
+  error: PropTypes.bool.isRequired,
+  didRequested: PropTypes.bool.isRequired,
   addUser: PropTypes.func.isRequired,
 };
 export default View;

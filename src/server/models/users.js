@@ -51,7 +51,6 @@ const users = {
   },
 
   update(data, id) {
-    console.log(data);
     if (data.id) { return (Promise.reject({ msg: 'id can\'t be change' })); }
     const query = `${pgp.helpers.update(data, null, 'users')} WHERE id=${id} RETURNING *`;
     return this.db.one(query);
