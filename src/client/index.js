@@ -10,6 +10,7 @@ import UserProfile from './userprofile';
 import Logout from './logout';
 import Account from './account';
 import Root from './root';
+import AboutMe from './aboutme';
 
 const url = 'http://127.0.0.1:3004';
 const io = socketIO.connect(url);
@@ -30,6 +31,7 @@ const App = () => (<Provider store={store}>
       <Route path="/" component={Root} />
       <Route path="/auth" component={Authentication} />
       <Route path="/suggestion" component={Suggestion} />
+      <Route path="/about_me" component={AboutMe} />
       <Route path="/logout" component={Logout} />
       <Route path="/user/:id" component={UserProfile} />
       <Route path="/me" component={Account} />

@@ -7,7 +7,7 @@ class Logout extends Component {
     localStorage.removeItem('id');
   }
   render() {
-    return (<div><Redirect to="/auth/register" /></div>);
+    return (<div><Redirect to="/auth/login" /></div>);
   }
 }
 

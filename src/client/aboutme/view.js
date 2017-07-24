@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import { Redirect, NavLink } from 'react-router-dom';
 import axios from 'axios';
-import '../auth.css';
+import '../authentication/auth.css';
 
 class View extends Component {
   state = {
     orientation: '',
     bio: '',
+    account: false,
     tag: '',
     error: null,
     canUpdate: false,
     imgProfile: '',
     interest: [],
   };
+
+  componentWillMount() {
+    const { location: { pathname } } = this.props;
+    if (pathname === '/about_me/account') this.setState({ account: true });
+  }
 
   handleChange = ({ target: { value, name, files } }) => {
     if (name === 'imgProfile') {
@@ -46,8 +53,8 @@ class View extends Component {
     evt.preventDefault();
     const { updateUser, matchaToken } = this.props;
     const { canUpdate, orientation, bio, interest, imgProfile } = this.state;
-    if (!orientation || !bio || !interest) return this.setState('error': 'No Empty input please');
-    if (canUpdate) {
+    if (!orientation || !bio || !interest) this.setState({ error: 'No Empty input please' });
+    else if (canUpdate) {
       const formData = new FormData();
       formData.append('imgProfile', imgProfile);
       formData.append('matchaToken', matchaToken);
@@ -64,13 +71,22 @@ class View extends Component {
     }
   };
 
+  handleUpdate = (evt) => {
+    evt.preventDefault();
+    const { updateUser, matchaToken } = this.props;
+    const { orientation, bio, interest, imgProfile } = this.state;
+    updateUser({ orientation, bio, interest });
+  };
+
   render() {
-    const { bio, tag, interest, imgProfile, error } = this.state;
+    const { bio, tag, interest, imgProfile, error, didRequested, account } = this.state;
+    if (didRequested) return <Redirect to="/suggestion" />;
     return (
       <div className="register-container">
-        { error && <div>{alert(error)}</div>}
+        <div className="navbar-top-right"><NavLink to="/me" className="button">Account</NavLink></div>
+        { error && <div>{ alert(error)}{window.location.reload()}</div>}
         <div className="register-form-container" onChange={this.handleChange}>
-          <h2>One more step!</h2>
+          <h2>Update your info!</h2>
           <input id="heterosexual" type="radio" name="orientation" value="heterosexual" onClick={this.handleChange} className="float-left" />
           <label htmlFor="heterosexual" className="float-left label-radio">Heterosexual</label>
           <input id="homosexual" type="radio" name="orientation" value="homosexual" onClick={this.handleChange} className="float-left" />
@@ -84,9 +100,13 @@ class View extends Component {
               <div className="tagField" value={elm} key={elm}>#{elm}</div>
             ))}
           </ul>
-          <label htmlFor="file" className="label-file">Choisir une photo de profil</label>
-          <input id="file" name="imgProfile" className="input-file" type="file" accept="image/*" /><br />
-          { imgProfile && <button type="submit" onClick={this.handleSubmit} className="button" >Continue!</button> }
+          { account && <button type="submit" onClick={this.handleUpdate} className="button" >Update!</button> }
+          { !account &&
+            <label htmlFor="file" className="label-file">Choisir une photo de profil</label> &&
+            <input id="file" name="imgProfile" className="input-file" type="file" accept="image/*" /> &&
+            <br />
+          }
+          { !account && imgProfile && <button type="submit" onClick={this.handleSubmit} className="button" >Continue!</button> } 
         </div>
       </div>
     );
@@ -94,6 +114,7 @@ class View extends Component {
 }
 
 View.propTypes = {
+  location: PropTypes.object.isRequired,
   matchaToken: PropTypes.string,
   updateUser: PropTypes.func.isRequired,
 };

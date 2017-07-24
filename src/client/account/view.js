@@ -15,6 +15,8 @@ class View extends Component {
     return (
       <div className="container">
         <div className="navbar-top-right">
+          <NavLink to="/about_me/account" className="button">Update Profil infos ? </NavLink>
+          <NavLink to="/suggestion" className="button">Update Account infos ? </NavLink>
           <NavLink to="/suggestion" className="button">Suggestion</NavLink>
           <NavLink to="/logout" className="button">Logout</NavLink>
         </div>

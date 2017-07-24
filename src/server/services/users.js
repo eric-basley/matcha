@@ -55,7 +55,11 @@ const service = {
 
   put({ id: { id }, infoToUpdate }) {
     const { models: { users } } = this.globals;
-    return users.update(infoToUpdate, Number(id));
+    const info = R.filter((single) => {
+      if (typeof single === 'object' && single.length !== 0) return true;
+      if (typeof single === 'string' && single !== '') return true;
+    }, infoToUpdate);
+    return users.update(info, Number(id));
   },
 
   suggestion({ users }) {
