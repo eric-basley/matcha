@@ -8,6 +8,7 @@ import Authentication from './authentication';
 import Suggestion from './suggestion';
 import UserProfile from './userprofile';
 import Logout from './logout';
+import Account from './account';
 import Root from './root';
 
 const url = 'http://127.0.0.1:3004';
@@ -18,10 +19,7 @@ io.on('connect', () => console.log('socket.io connected.')); // eslint-disable-l
 const matchaToken = localStorage.getItem('matchaToken');
 const id = localStorage.getItem('id');
 const initialState = {
-  login: {
-    matchaToken: null,
-    id: null,
-  },
+  login: { matchaToken, id },
 };
 
 const store = configureStore(initialState, io);
@@ -34,6 +32,7 @@ const App = () => (<Provider store={store}>
       <Route path="/suggestion" component={Suggestion} />
       <Route path="/logout" component={Logout} />
       <Route path="/user/:id" component={UserProfile} />
+      <Route path="/me" component={Account} />
     </div>
   </Router>
 </Provider>

@@ -24,7 +24,10 @@ class View extends Component {
     return (
       <div>
         { redirect && <Redirect push to={`user/${redirect}`} /> }
-        <div className="navbar-top-right"><NavLink to="continue" className="button">Continue</NavLink></div>
+        <div className="navbar-top-right">
+          <NavLink to="/me" className="button">Account</NavLink>
+          <NavLink to="/logout" className="button">Logout</NavLink>
+        </div>
         <h2 className="bold center">Some profile you may like</h2>
         <div className="container-suggestion">
           { listUser.map(user => (

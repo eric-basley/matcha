@@ -56,8 +56,13 @@ class View extends Component {
 }
 
 View.propTypes = {
-  error: PropTypes.bool.isRequired,
+  error: PropTypes.string,
   didRequested: PropTypes.bool.isRequired,
   addUser: PropTypes.func.isRequired,
 };
+
+View.defaultProps = {
+  error: null,
+};
+
 export default View;

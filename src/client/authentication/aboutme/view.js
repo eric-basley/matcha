@@ -46,6 +46,7 @@ class View extends Component {
     evt.preventDefault();
     const { updateUser, matchaToken } = this.props;
     const { canUpdate, orientation, bio, interest, imgProfile } = this.state;
+    if (!orientation || !bio || !interest) return this.setState('error': 'No Empty input please');
     if (canUpdate) {
       const formData = new FormData();
       formData.append('imgProfile', imgProfile);
@@ -64,9 +65,10 @@ class View extends Component {
   };
 
   render() {
-    const { bio, tag, interest, imgProfile } = this.state;
+    const { bio, tag, interest, imgProfile, error } = this.state;
     return (
       <div className="register-container">
+        { error && <div>{alert(error)}</div>}
         <div className="register-form-container" onChange={this.handleChange}>
           <h2>One more step!</h2>
           <input id="heterosexual" type="radio" name="orientation" value="heterosexual" onClick={this.handleChange} className="float-left" />

@@ -18,10 +18,13 @@ class View extends Component {
     const { connectUser } = this.props;
     const { login, password } = this.state;
     connectUser({ login, password });
+    // window.location.reload();
   };
 
   render() {
     const { login, password } = this.state;
+    const { didRequested } = this.props;
+    if (didRequested) window.location.reload();
     return (
       <div>
         <div className="navbar-top-right"><NavLink to="register" className="button">Pas encore Membre?</NavLink></div>
@@ -40,6 +43,7 @@ class View extends Component {
 }
 
 View.propTypes = {
+  didRequested: PropTypes.bool.isRequired,
   connectUser: PropTypes.func.isRequired,
 };
 

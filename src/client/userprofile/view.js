@@ -24,7 +24,7 @@ class View extends Component {
     return (
       <div className="container">
         <div className="navbar-top-right">
-          <NavLink to="register" className="button">Account</NavLink>
+          <NavLink to="/me" className="button">Account</NavLink>
           <NavLink to="/logout" className="button">Logout</NavLink>
         </div>
         <div className="user_page">
@@ -57,9 +57,13 @@ class View extends Component {
 }
 
 View.propTypes = {
-  userGet: PropTypes.object.isRequired,
-  userLoaded: PropTypes.object.isRequired,
+  userGet: PropTypes.func.isRequired,
+  userLoaded: PropTypes.object,
   match: PropTypes.object.isRequired,
+};
+
+View.defaultProps = {
+  userLoaded: null,
 };
 
 export default View;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+import './flashMessage.css';
 
 class Root extends Component {
 
@@ -9,19 +10,23 @@ class Root extends Component {
     if (matchaToken) ifUserCheckConnected();
   }
 
+  componentDidUpdate() {
+    const { error } = this.props;
+    if (error) setTimeout(() => window.location.reload(), 1000);
+  }
+
   render() {
-    const { user, error, matchaToken } = this.props;
+    const { user, error, matchaToken, didRequested } = this.props;
     const { pathname } = this.props.location;
-    if (error) return <div>{ alert('Error Happens') }</div>;
-    // if (!user) return <Redirect to="/auth/register" />;
-    if (!user) return <div>is Fetching...</div>;
+    if (error) return <div className="flashMessage"> Error Occurred {error}</div>;
+    if (!user || !didRequested) return <div>is Fetchin...</div>;
     return (
       <div>
         { !user && !matchaToken && pathname.match(/^\/auth\/reset_password/) === null && <Redirect to="/auth/register" />}
-        { !user.confirmed && <Redirect to="/auth/login" />}
-        {/* { !connected && <Redirect to="/auth/login" />}
-        { connected && !user.bio && <Redirect to="/auth/about_me" /> }
-        { connected && user.bio && <Redirect to="/suggestion" />}*/}
+        { !user.confirmed && pathname.match(/^\/auth\/register/) === null && <Redirect to="/auth/login" />}
+        { !matchaToken && pathname.match(/^\/auth\/register/) === null && <Redirect to="/auth/login" />}
+        { matchaToken && !user.bio && user.confirmed === true && <Redirect to="/auth/about_me" /> }
+        { matchaToken && user.bio && pathname.match(/^\/auth/) && <Redirect to="/suggestion" />}
       </div>
     );
   }
@@ -29,14 +34,16 @@ class Root extends Component {
 
 Root.propTypes = {
   user: PropTypes.object.isRequired,
-  error: PropTypes.bool.isRequired,
+  error: PropTypes.string,
   matchaToken: PropTypes.string,
+  didRequested: PropTypes.bool.isRequired,
   ifUserCheckConnected: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
 };
 
 Root.defaultProps = {
   matchaToken: null,
+  error: null,
 };
 
 export default Root;
