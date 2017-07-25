@@ -1,6 +1,5 @@
 const server = { host: '127.0.0.1' };
 const path = require('path');
-require("babel-polyfill");
 
 module.exports = {
   secret: {
