@@ -26,7 +26,7 @@ export const validateLoginForm = (ctx) => {
 };
 
 export const getByEmail = (ctx) => {
-  const { globals: { models: { users } }, input: { login, password } } = ctx;
+  const { globals: { models: { users } }, input: { login, password } } = ctx; // eslint-disable-line no-shadow
   return users.getByEmail(login)
   .then((user) => {
     if (!user.confirmed) return Promise.reject({ status: 'Unauthorized' });
@@ -34,7 +34,7 @@ export const getByEmail = (ctx) => {
   });
 };
 export const checkIfConfirmed = (ctx) => {
-  const { globals: { models: { users } }, input: { id } } = ctx;
+  const { globals: { models: { users } }, input: { id } } = ctx; // eslint-disable-line no-shadow
   return users.load(id).then(user => {
     if (user.confirmed) {
       const { config: { httpCode: { error } } } = ctx.globals;
@@ -76,7 +76,6 @@ export const checkAuth = (ctx) => {
 
 export const getInfoToUpdate = (ctx) => {
   const { input: id, message: { payload: infoToUpdate } } = ctx;
-  console.log(ctx.message);
   return Promise.resolve({ ...ctx, input: { id, infoToUpdate } });
 };
 

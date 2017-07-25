@@ -16,7 +16,7 @@ class Root extends Component {
   }
 
   render() {
-    const { user, error, matchaToken, didRequested } = this.props;
+    const { user, error, matchaToken } = this.props;
     const { pathname } = this.props.location;
     if (error) return <div className="flashMessage"> Error Occurred {error}</div>;
     return (
@@ -35,7 +35,6 @@ Root.propTypes = {
   user: PropTypes.object.isRequired,
   error: PropTypes.string,
   matchaToken: PropTypes.string,
-  didRequested: PropTypes.bool.isRequired,
   ifUserCheckConnected: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
 };

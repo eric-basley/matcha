@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import mailer from '../mailer';
 
-const generateOneTimeToken = ({ config: { routes: { resetPassword } }, models: { users } }) => async (ctx, next) => {
+const generateOneTimeToken = ({ config: { routes: { resetPassword } }, models: { users } }) => async ctx => {
   const { email } = ctx.query;
   try {
     const user = await users.getByEmailVerif(email);
