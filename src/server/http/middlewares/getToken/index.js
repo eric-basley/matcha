@@ -1,7 +1,9 @@
 const getToken = async (ctx, next) => {
-  const { matchaToken: token } = ctx.query || ctx.request.body;
-  const { matchaToken } = ctx.request.body;
-  ctx.matchaToken = matchaToken || token;
+  const { request: { body: rBody }, req: { body } } = ctx;
+  let matchaToken = ctx.query.matchaToken;
+  if (!matchaToken && rBody) matchaToken = rBody;
+  if (!matchaToken && body) matchaToken = body;
+  ctx.matchaToken = matchaToken;
   await next();
 };
 

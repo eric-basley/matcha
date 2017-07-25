@@ -22,7 +22,7 @@ class Root extends Component {
     return (
       <div>
         { !user && !matchaToken && pathname.match(/^\/auth\/reset_password/) === null && <Redirect to="/auth/register" />}
-        { !user.confirmed && pathname.match(/^\/auth\/register/) && <Redirect to="/auth/login" />}
+        { !user.confirmed && pathname.match(/^\/auth\/register/) && <Redirect to="/auth/login" /> }
         { !matchaToken && <Redirect to="/auth/login" />}
         { matchaToken && !user.bio && user.confirmed === true && <Redirect to="/about_me" /> }
         { matchaToken && user.bio && pathname.match(/^\/auth/) && <Redirect to="/suggestion" />}

@@ -4,6 +4,7 @@ import logger from 'koa-logger';
 import multer from 'koa-multer';
 import Router from 'koa-router';
 import path from 'path';
+import cors from 'kcors';
 import { checkToken, getToken, getUser, checkAuth } from './middlewares';
 import addImg from './addImg';
 import sendTokenResetPassword from './sendTokenResetPassword';
@@ -37,6 +38,7 @@ const init = (ctx) => {
   app
     .use(bodyParser())
     .use(logger())
+    .use(cors())
     .use(router.routes())
     .use(router.allowedMethods());
   const httpServer = app.listen(port, host, () => {

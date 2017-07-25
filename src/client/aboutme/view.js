@@ -102,9 +102,9 @@ class View extends Component {
           </ul>
           { account && <button type="submit" onClick={this.handleUpdate} className="button" >Update!</button> }
           { !account &&
-            <label htmlFor="file" className="label-file">Choisir une photo de profil</label> &&
-            <input id="file" name="imgProfile" className="input-file" type="file" accept="image/*" /> &&
-            <br />
+            <div><label htmlFor="file" className="label-file">Choisir une photo de profil</label>
+              <input id="file" name="imgProfile" className="input-file" type="file" accept="image/*" />
+              <br /></div>
           }
           { !account && imgProfile && <button type="submit" onClick={this.handleSubmit} className="button" >Continue!</button> }
         </div>
