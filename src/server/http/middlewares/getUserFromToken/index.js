@@ -1,12 +1,6 @@
 import jwt from 'jsonwebtoken';
 import users from '../../../models/users';
 
-// const load = async (id) => {
-//   try {
-//     const
-//   }
-// };
-
 const getUserFromToken = (config) => async (ctx, next) => {
   const { matchaToken } = ctx;
   const { secretSentence } = config;

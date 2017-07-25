@@ -9,7 +9,6 @@ import initSocketIo from './socketio';
 const run = (config) => initPostgres({ config, startTime: new Date() }) // eslint-disable-line no-shadow
     .then(loadUserSchema)
     .then(loadEventSchema)
-    // .then(addFakeAccounts)
     .then(initServices)
     .then(initHttp)
     .then(initSocketIo);
