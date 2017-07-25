@@ -9,13 +9,24 @@ import addFakeAccounts from './postgres/__test__/addFakeAccounts';
 const run = (config) => initPostgres({ config, startTime: new Date() }) // eslint-disable-line no-shadow
     .then(loadUserSchema)
     .then(loadEventSchema)
+    // .then(addFakeAccounts)
     .then(initServices)
     .then(initHttp)
     .then(initSocketIo);
     // .then((ctx) => {
     //   const { users } = ctx.models;
     //   return users.deleteAll().then(() => ctx);
-    // })
-    // .then(addFakeAccounts);
+    // });
 
+// const run = async (config) => initPostgres({ config, startTime: new Date() }) // eslint-disable-line no-shadow
+//     .then(loadUserSchema)
+//     .then(loadEventSchema)
+//     .then(initServices)
+//     .then(initHttp)
+//     .then(initSocketIo);
+    // .then((ctx) => {
+    //   const { users } = ctx.models;
+    //   return users.deleteAll().then(() => ctx);
+    // })
+    // .then(addF
 export default run;

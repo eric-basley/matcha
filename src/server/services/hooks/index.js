@@ -3,6 +3,7 @@ import Joi from 'joi';
 import geoip from 'geoip-lite';
 import { schemaRegister, schemaLogin } from '../../../lib/validator';
 import mailer from '../../http/mailer';
+import users from '../../models/users'; // eslint-disable-line
 
 export const validateRegisterForm = (ctx) => {
   const { input } = ctx;
@@ -75,6 +76,7 @@ export const checkAuth = (ctx) => {
 
 export const getInfoToUpdate = (ctx) => {
   const { input: id, message: { payload: infoToUpdate } } = ctx;
+  console.log(ctx.message);
   return Promise.resolve({ ...ctx, input: { id, infoToUpdate } });
 };
 

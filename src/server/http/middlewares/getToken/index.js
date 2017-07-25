@@ -1,8 +1,8 @@
-const getToken = () => (req, res, next) => {
-  const { matchaToken: token } = req.query;
-  const { matchaToken } = req.body;
-  req.matchaToken = matchaToken || token;
-  next();
+const getToken = async (ctx, next) => {
+  const { matchaToken: token } = ctx.query || ctx.request.body;
+  const { matchaToken } = ctx.request.body;
+  ctx.matchaToken = matchaToken || token;
+  await next();
 };
 
 export default getToken;

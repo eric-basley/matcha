@@ -1,8 +1,8 @@
 import pgp from 'pg-promise';
 import EventEmitter from 'events';
 
-
-const models = {};
+const models = {
+};
 
 class Proto extends EventEmitter {
   connect(db) {
