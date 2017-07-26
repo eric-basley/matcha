@@ -13,7 +13,7 @@ import resetPassword from './resetPassword';
 
 const getUrl = server => `http://${server.address().address}:${server.address().port}`;
 
-const init = (ctx) => {
+const init = async (ctx) => {
   const app = new Koa();
   const router = new Router();
   const { server: { host, port }, secretSentence } = ctx.config;
