@@ -13,7 +13,7 @@ import resetPassword from './resetPassword';
 
 const getUrl = server => `http://${server.address().address}:${server.address().port}`;
 
-const init = async (ctx) => {
+const init = ctx => new Promise(resolve => {
   const app = new Koa();
   const router = new Router();
   const { server: { host, port }, secretSentence } = ctx.config;
@@ -44,8 +44,8 @@ const init = async (ctx) => {
   const httpServer = app.listen(port, host, () => {
     httpServer.url = getUrl(httpServer);
     console.log(`Connected ${httpServer.url}`); // eslint-disable-line no-console
+    resolve({ ...ctx, http: httpServer });
   });
-  return ({ ...ctx, http: httpServer });
-};
+});
 
 export default init;
