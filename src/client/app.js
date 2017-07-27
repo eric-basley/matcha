@@ -14,7 +14,6 @@ export class App extends Component {
     // const handleClick = () => history.push(`/people/${user._id}`);
     // const handleLogout = () => logout();
     const makeAuthRoute = route => (props) => {
-      console.log(route);
       if (route.auth) {
         return (
           <Auth redirect>

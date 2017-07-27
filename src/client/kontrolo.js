@@ -43,7 +43,7 @@ Kontrolo.childContextTypes = {
 
 Kontrolo.propTypes = {
   children: PropTypes.element.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   isAuthorized: PropTypes.func.isRequired,
   redirect: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,
@@ -58,10 +58,12 @@ export class Auth extends React.Component { // eslint-disable-line react/no-mult
   componentWillMount() {
     const { redirect } = this.props;
     const { isAuthorized, redirect: gotoAuth } = this.context;
+    console.log(`isAuthorized ${isAuthorized()}`);
     if (!isAuthorized()) {
       if (redirect) return gotoAuth();
     }
   }
+
   componentWillUpdate() {
     const { redirect } = this.props;
     const { isAuthorized, redirect: gotoAuth } = this.context;

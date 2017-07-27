@@ -33,7 +33,7 @@ class Login extends Component {
     const { login, password } = this.state;
     return (
       <div>
-        <div className="navbar-top-right"><NavLink to="/auth/register" className="button">Pas encore Membre?</NavLink></div>
+        <div className="navbar-top-right"><NavLink to="/register" className="button">Pas encore Membre?</NavLink></div>
         <div className="register-container">
           <form className="register-form-container" onSubmit={this.handleSubmit} onChange={this.handleChange}>
             <h2>Login</h2>

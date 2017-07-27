@@ -30,13 +30,13 @@ const routes = [
   {
     path: '/login',
     exact: true,
-    default: true,
-    auth: true,
     component: Login,
   },
   {
     path: '/me',
     exact: true,
+    default: true,
+    auth: true,
     component: Account,
   },
 ];

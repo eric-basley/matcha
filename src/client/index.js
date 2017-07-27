@@ -19,8 +19,7 @@ io.on('error', err => console.log(`socket.io error: ${err}`)); // eslint-disable
 const matchaToken = localStorage.getItem('matchaToken');
 const initialState = {
   currentUser: {
-    matchaToken,
-    user: {} },
+    matchaToken },
 };
 
 const store = configureStore(initialState, io);

@@ -1,5 +1,5 @@
 export const LOGIN_REQUEST = 'evtx:server:users:login';
-export const CHECK_TOKEN = 'evtx:server:auth:checkToken';
+export const CHECK_TOKEN = 'evtx:server:users:checkToken';
 export const USER_LOGGED = 'users:logged';
 export const USER_LOGOUT = 'evtx:server:auth:logout';
 export const USER_LOGGED_OUT = 'auth:logout';
@@ -15,9 +15,9 @@ export const checkToken = (callback) => ({
   callback,
 });
 
-export const userLogged = (user, token) => ({
+export const userLogged = (user, matchaToken) => ({
   type: USER_LOGGED,
-  payload: { user, token },
+  payload: { user, matchaToken },
 });
 
 export const logout = () => (dispatch) => {

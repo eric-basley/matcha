@@ -34,8 +34,7 @@ const getToken = (ctx) => {
 };
 
 const getUserFromToken = (ctx) => {
-  const { globals: { config: { secretSentence }, models: { users } }, matchaToken, message: { type } } = ctx;
-  if (type === 'users:post' || type === 'users:login') return Promise.resolve(ctx);
+  const { globals: { config: { secretSentence }, models: { users } }, matchaToken } = ctx;
   if (!matchaToken) return Promise.resolve(ctx);
   const dataDecoded = jwt.verify(matchaToken, secretSentence);
   if (!dataDecoded) return Promise.resolve(ctx);
@@ -96,12 +95,15 @@ class Reactor {
   initIo() {
     const { evtx, io } = this;
     io.on('connection', (socket) => {
-      socket.on('action', (message) => {
-        logger(message);
+      socket.on('action', (message, cb) => {
         logger(`receive ${message.type} action`);
         const localCtx = { io, socket, usersConnected: this.getConnectedUsers.bind(this) };
         evtx.run(message, localCtx)
           .then((res) => {
+            if (cb) {
+              logger(`answer ${message.type} action`);
+              return cb(null, res);
+            }
             // const connected = this.getConnectedUsers();
             // if (res.type === 'isConnected') {
             //   if (connected.includes(res.payload.user.id)) return socket.emit('action', { ...res, payload: { ...res.payload, connected: true } });
@@ -115,6 +117,7 @@ class Reactor {
             if (!err.status) {
               res = { status: err.detail, routine: err.routine };
             } else res = { status: err.status };
+            if (cb) return cb(res);
             socket.emit('action', { type: 'EvtX:Error', ...res });
           });
       });
