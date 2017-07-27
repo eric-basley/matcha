@@ -102,14 +102,13 @@ class Reactor {
         const localCtx = { io, socket, usersConnected: this.getConnectedUsers.bind(this) };
         evtx.run(message, localCtx)
           .then((res) => {
-            const connected = this.getConnectedUsers();
-            if (res.type === 'isConnected') {
-              if (connected.includes(res.payload.user.id)) return socket.emit('action', { ...res, payload: { ...res.payload, connected: true } });
-              return socket.emit('action', { ...res, payload: { ...res.payload, connected: false } });
-            }
-            logger(`sent ${res.type} action`);
-            socket.emit('action', { ...res, payload: { ...res.payload, connected } });
-            // console.log(res);
+            // const connected = this.getConnectedUsers();
+            // if (res.type === 'isConnected') {
+            //   if (connected.includes(res.payload.user.id)) return socket.emit('action', { ...res, payload: { ...res.payload, connected: true } });
+            //   return socket.emit('action', { ...res, payload: { ...res.payload, connected: false } });
+            // }
+            logger(`answer ${res.type} action`);
+            socket.emit('action', res);
           })
           .catch((err) => {
             let res = {};

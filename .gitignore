@@ -13,4 +13,6 @@ stats.json
 .DS*
 ._*
 etc
+saveClient
+peep
 npm-debug.log

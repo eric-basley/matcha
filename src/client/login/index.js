@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { CONNECTED_USER } from './actions';
-import { NavLink, Redirect } from 'react-router-dom';
-import '../auth.css';
+import { connect } from 'react-redux';
+import { NavLink, withRouter } from 'react-router-dom';
+import { createStructuredSelector, createSelector } from 'reselect';
+import { loginRequest } from './actions';
+import { defaultRoute } from '../routes';
+import './login.css';
 
-class View extends Component {
+class Login extends Component {
   state = {
     login: '',
     password: '',
-    redirect: false,
   };
+
+  componentWillMount() {
+    const { user, history } = this.props;
+    if (user) history.replace(defaultRoute().path);
+  }
 
   handleChange = ({ target: { value, name } }) => {
     this.setState({ [name]: value });
@@ -17,19 +24,13 @@ class View extends Component {
 
   handleSubmit = (evt) => {
     evt.preventDefault();
-    const { connectUser } = this.props;
+    const { loginRequest } = this.props;
     const { login, password } = this.state;
-    connectUser({ login, password });
+    loginRequest({ login, password });
   };
 
   render() {
     const { login, password } = this.state;
-    const { didRequested, error, response } = this.props;
-    console.log(`didRequested = ${didRequested}, error = ${error}`);
-    // if (didRequested && !error && response === CONNECTED_USER) {
-    //   return <Redirect to="/about_me" />;
-    // }
-     if (didRequested && !error) return <div> Redirect </div>;
     return (
       <div>
         <div className="navbar-top-right"><NavLink to="/auth/register" className="button">Pas encore Membre?</NavLink></div>
@@ -47,15 +48,22 @@ class View extends Component {
   }
 }
 
-View.propTypes = {
-  didRequested: PropTypes.bool,
-  error: PropTypes.string.isRequired,
-  response: PropTypes.string.isRequired,
-  connectUser: PropTypes.func.isRequired,
+Login.propTypes = {
+  loginRequest: PropTypes.func.isRequired,
+  user: PropTypes.object,
+  history: PropTypes.object.isRequired,
 };
 
-View.defaultProps = {
-  didRequested: false,
+const getState = (state) => state;
+
+const mapStateToProps = createStructuredSelector({
+    // error: createSelector([getState], (state) => state),
+//   didRequested: createSelector([getState], (state) => state.didRequested),
+//   response: createSelector([getState], (state) => state.response),
+});
+
+const mapDispatchToProps = {
+  loginRequest,
 };
 
-export default View;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
