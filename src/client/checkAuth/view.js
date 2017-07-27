@@ -7,7 +7,7 @@ import ErrorMsg from '../serverInfo/msg';
 
 import './flashMessage.css';
 
-class Root extends Component {
+class checkAuth extends Component {
 
   state = {
     isUserLoggedIn: null,
@@ -26,24 +26,24 @@ class Root extends Component {
     const { isUserLoggedIn } = this.state;
     const { error } = this.props;
     const { pathname } = this.props.location;
-    console.log(isUserLoggedIn, error, pathname);
+    // console.log(isUserLoggedIn, error, pathname);
     return (
       <div>
         { error && <ErrorMsg />}
         { isUserLoggedIn === false &&
           <Redirect to="/auth/login" />}
         { isUserLoggedIn === true &&
-          pathname.match(/^\/auth\/?/) !== null &&
+          pathname.match(/^\/?$/) !== null &&
           <Redirect to="/suggestion" />}
       </div>
     );
   }
 }
 
-Root.propTypes = {
+checkAuth.propTypes = {
   matchaToken: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
   error: PropTypes.string.isRequired,
 };
 
-export default Root;
+export default checkAuth;

@@ -1,4 +1,3 @@
-const RESET = 'resetRequested';
 const EVTX_ERROR = 'EvtX:Error';
 const EVTX_RESP = 'evtx:respo';
 const initialState = {
@@ -7,11 +6,10 @@ const initialState = {
   response: '',
 };
 
-export const resetRequested = () => ({ type: RESET, payload: {} });
-
 export default (state = initialState, action) => {
   switch (action.type.slice(0, 10)) {
     case EVTX_ERROR:
+      if (!action.status) return { ...state, error: '201', didRequested: true };
       if (typeof action.status === 'number') return { ...state, error: action.status.toString(), didRequested: true };
       return { ...state, error: action.status, didRequested: true };
     case EVTX_RESP:

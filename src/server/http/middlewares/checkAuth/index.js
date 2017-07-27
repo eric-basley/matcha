@@ -4,6 +4,7 @@ import users from '../../../models/users';
 const checkToken = (secret) => async (ctx, next) => {
   try {
     const { matchaToken } = ctx;
+    console.log(matchaToken);
     if (!matchaToken) throw (new Error());
     jwt.verify(matchaToken, secret);
     const decoded = jwt.decode(matchaToken);

@@ -6,7 +6,6 @@ const addImg = (users) => async (ctx) => {
   const { user: { id } } = ctx;
   const { imgProfile } = req.files;
   let path = null;
-
   if (req.files.imgs) {
     req.files.imgs.forEach((img, index) => {
       imgs[`photo_${index + 1}`] = `/uploads/${img.filename}`;

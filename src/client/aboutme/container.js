@@ -8,6 +8,7 @@ const getState = (state) => state.currentUser;
 const mapStateToProps = createStructuredSelector({
   matchaToken: createSelector([getState], (state) => state.matchaToken),
   didRequested: createSelector([getStateServer], (state) => state.didRequested),
+  response: createSelector([getStateServer], (state) => state.response),
 });
 
 const mapDispatchToProps = {

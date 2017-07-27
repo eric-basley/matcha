@@ -21,7 +21,7 @@ io.on('connect', () => console.log('socket.io connected.')); // eslint-disable-l
 
 const matchaToken = localStorage.getItem('matchaToken') || "";
 const initialState = {
-  currentUser: { matchaToken },
+  currentUser: { matchaToken, user: {} },
 };
 
 const store = configureStore(initialState, io);
@@ -32,10 +32,10 @@ const App = () => (<Provider store={store}>
       <Route path="/" component={CheckAuth} />
       <Route path="/auth" component={Authentication} />
       <Route path="/suggestion" component={Suggestion} />
-      <Route path="/about_me" component={AboutMe} />
+      {/*<Route path="/about_me" component={AboutMe} />
       <Route path="/logout" component={Logout} />
       <Route path="/user/:id" component={UserProfile} />
-      <Route path="/me" component={Account} />
+      <Route path="/me" component={Account} />*/}
     </div>
   </Router>
 </Provider>

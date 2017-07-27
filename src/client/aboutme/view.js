@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import { USER_UPDATED } from './actions';
 import { Redirect, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import '../authentication/auth.css';
@@ -79,8 +80,9 @@ class View extends Component {
   };
 
   render() {
-    const { bio, tag, interest, imgProfile, didRequested, account } = this.state;
-    // if (didRequested) return <Redirect to="/suggestion" />;
+    const { bio, tag, interest, imgProfile, account } = this.state;
+    const { didRequested, response } = this.props;
+    if (didRequested && response === USER_UPDATED) return <Redirect to="/me" />;
     return (
       <div className="register-container">
         <div className="navbar-top-right"><NavLink to="/me" className="button">Account</NavLink></div>

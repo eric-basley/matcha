@@ -25,10 +25,11 @@ class View extends Component {
   render() {
     const { login, password } = this.state;
     const { didRequested, error, response } = this.props;
-    console.log(didRequested,error,response);
-    if (didRequested && !error && response === CONNECTED_USER) {
-      return <Redirect to="/about_me" />;
-    }
+    console.log(`didRequested = ${didRequested}, error = ${error}`);
+    // if (didRequested && !error && response === CONNECTED_USER) {
+    //   return <Redirect to="/about_me" />;
+    // }
+     if (didRequested && !error) return <div> Redirect </div>;
     return (
       <div>
         <div className="navbar-top-right"><NavLink to="/auth/register" className="button">Pas encore Membre?</NavLink></div>

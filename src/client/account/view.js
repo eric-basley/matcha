@@ -4,13 +4,19 @@ import { PropTypes } from 'prop-types';
 import '../userprofile/userprofile.css';
 import '../authentication/auth.css';
 
-class View extends Component {
+class Account extends Component {
   state = {
 
   }
 
+  componentWillMount() {
+    const { getUser } = this.props;
+    getUser();
+  }
+
   render() {
     const { user } = this.props;
+    console.log(user);
     if (!user) return (<div>is Fetching...</div>);
     return (
       <div className="container">
@@ -46,8 +52,8 @@ class View extends Component {
   }
 }
 
-View.propTypes = {
+Account.propTypes = {
   user: PropTypes.object.isRequired,
 };
 
-export default View;
+export default Account;
