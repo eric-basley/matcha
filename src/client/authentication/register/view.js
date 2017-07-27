@@ -25,14 +25,13 @@ class View extends Component {
     addUser({ login, email, password, firstname, lastname, sexe, age });
   };
 
+
   render() {
     const { login, email, password, firstname, lastname, age } = this.state;
     const { error, didRequested } = this.props;
-    let redirect = false;
-    if (!error && didRequested === true) redirect = true;
+    if (didRequested && !error) return <Redirect to="login" />;
     return (
       <div>
-        { redirect === true && <Redirect to="login" />}
         <div className="navbar-top-right"><NavLink to="login" className="button">Deja Membre?</NavLink></div>
         <div className="register-container">
           <form className="register-form-container" onSubmit={this.handleSubmit} onChange={this.handleChange}>
@@ -56,13 +55,9 @@ class View extends Component {
 }
 
 View.propTypes = {
-  error: PropTypes.string,
+  error: PropTypes.string.isRequired,
   didRequested: PropTypes.bool.isRequired,
   addUser: PropTypes.func.isRequired,
-};
-
-View.defaultProps = {
-  error: null,
 };
 
 export default View;

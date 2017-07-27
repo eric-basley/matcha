@@ -1,17 +1,18 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector, createSelector } from 'reselect';
-import { updateUser } from './actions';
+import { ifUserCheckConnected } from './action';
 import View from './view';
 
+const getStateUser = (state) => state.currentUser;
 const getStateServer = (state) => state.serverInfo;
-const getState = (state) => state.currentUser;
 const mapStateToProps = createStructuredSelector({
-  matchaToken: createSelector([getState], (state) => state.matchaToken),
+  matchaToken: createSelector([getStateUser], (state) => state.matchaToken),
+  error: createSelector([getStateServer], (state) => state.error),
   didRequested: createSelector([getStateServer], (state) => state.didRequested),
 });
 
 const mapDispatchToProps = {
-  updateUser,
+  ifUserCheckConnected,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(View);

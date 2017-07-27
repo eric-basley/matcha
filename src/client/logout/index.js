@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 class Logout extends Component {
+
   componentWillMount() {
     localStorage.removeItem('matchaToken');
-    localStorage.removeItem('id');
+    window.location.reload();
   }
   render() {
-    return (<div><Redirect to="/auth/login" /></div>);
+    return (<div><Redirect to="/auth" /></div>);
   }
 }
 

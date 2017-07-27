@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { CONNECTED_USER } from './actions';
+import { NavLink, Redirect } from 'react-router-dom';
 import '../auth.css';
 
 class View extends Component {
   state = {
     login: '',
     password: '',
+    redirect: false,
   };
 
   handleChange = ({ target: { value, name } }) => {
@@ -18,16 +20,18 @@ class View extends Component {
     const { connectUser } = this.props;
     const { login, password } = this.state;
     connectUser({ login, password });
-    // window.location.reload();
   };
 
   render() {
     const { login, password } = this.state;
-    const { didRequested } = this.props;
-    if (didRequested) window.location.reload();
+    const { didRequested, error, response } = this.props;
+    console.log(didRequested,error,response);
+    if (didRequested && !error && response === CONNECTED_USER) {
+      return <Redirect to="/about_me" />;
+    }
     return (
       <div>
-        <div className="navbar-top-right"><NavLink to="register" className="button">Pas encore Membre?</NavLink></div>
+        <div className="navbar-top-right"><NavLink to="/auth/register" className="button">Pas encore Membre?</NavLink></div>
         <div className="register-container">
           <form className="register-form-container" onSubmit={this.handleSubmit} onChange={this.handleChange}>
             <h2>Login</h2>
@@ -43,8 +47,14 @@ class View extends Component {
 }
 
 View.propTypes = {
-  didRequested: PropTypes.bool.isRequired,
+  didRequested: PropTypes.bool,
+  error: PropTypes.string.isRequired,
+  response: PropTypes.string.isRequired,
   connectUser: PropTypes.func.isRequired,
+};
+
+View.defaultProps = {
+  didRequested: false,
 };
 
 export default View;

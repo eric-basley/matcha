@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import listUser from '../suggestion/reducer';
-import evtxError from '../error';
+import serverInfo from '../serverInfo';
 import userGet from '../userprofile/reducer';
-import { USER_IS_CONNECTED } from '../root/action';
+import { USER_IS_CONNECTED } from '../checkAuth/action';
 
 const InitialState = {
   user: {},
@@ -10,7 +10,7 @@ const InitialState = {
 };
 
 const rootReducer = combineReducers({
-  login: (state = {}, action) => {
+  currentUser: (state = {}, action) => {
     switch (action.type) {
       default:
         return state;
@@ -26,7 +26,7 @@ const rootReducer = combineReducers({
   },
   userGet,
   listUser,
-  evtxError,
+  serverInfo,
 });
 
 export default rootReducer;

@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import './auth.css';
 import Login from './login';
-import Register from './register';
+import Register from './Register';
 import ResetPassword from './resetPassword';
 import ForgetPassword from './forgetPassword';
 

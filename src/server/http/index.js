@@ -28,6 +28,7 @@ const init = ctx => new Promise(resolve => {
 
   router
     .get('/ping', ctx => ctx.body = ({ ping: 'pong' })) // eslint-disable-line
+    .get('/auth', getToken, checkAuth(secretSentence), cntx => cntx.status = 200) // eslint-disable-line
     .get('/confirm_email', getToken, getUser(ctx.config), confirmEmail)
     .get('/lost_password', sendTokenResetPassword(ctx))
     .post('/reset_password', getToken, checkToken, resetPassword)

@@ -8,7 +8,6 @@ export const socketIoMiddleWare = socket => ({ dispatch, getState }) => {
     switch (action.type) {
       case CONNECTED_USER:
         localStorage.setItem('matchaToken', action.payload.matchaToken);
-        localStorage.setItem('id', action.payload.id);
         return dispatch(action);
       case EVTX_ERROR:
         switch (action.status) {
@@ -22,7 +21,7 @@ export const socketIoMiddleWare = socket => ({ dispatch, getState }) => {
 
   return next => (action) => {
     if (action.type && action.type.toLowerCase().indexOf('evtx:server:') === 0) {
-      const { login: { matchaToken } } = getState();
+      const { currentUser: { matchaToken } } = getState();
       const message = { ...action, type: action.type.slice(12), matchaToken };
       const params = ['action', message];
       socket.emit(...params);

@@ -9,18 +9,19 @@ import Suggestion from './suggestion';
 import UserProfile from './userprofile';
 import Logout from './logout';
 import Account from './account';
-import Root from './root';
+import CheckAuth from './checkAuth';
 import AboutMe from './aboutme';
 
 const url = 'http://127.0.0.1:3004';
 const io = socketIO.connect(url);
+
 io.on('disconnect', () => console.log('socket.io disconnected ...')); // eslint-disable-line no-console
 io.on('error', err => console.log(`socket.io error: ${err}`)); // eslint-disable-line no-console
 io.on('connect', () => console.log('socket.io connected.')); // eslint-disable-line no-console
-const matchaToken = localStorage.getItem('matchaToken');
-const id = localStorage.getItem('id');
+
+const matchaToken = localStorage.getItem('matchaToken') || "";
 const initialState = {
-  login: { matchaToken, id },
+  currentUser: { matchaToken },
 };
 
 const store = configureStore(initialState, io);
@@ -28,7 +29,7 @@ const store = configureStore(initialState, io);
 const App = () => (<Provider store={store}>
   <Router>
     <div>
-      <Route path="/" component={Root} />
+      <Route path="/" component={CheckAuth} />
       <Route path="/auth" component={Authentication} />
       <Route path="/suggestion" component={Suggestion} />
       <Route path="/about_me" component={AboutMe} />

@@ -79,12 +79,11 @@ class View extends Component {
   };
 
   render() {
-    const { bio, tag, interest, imgProfile, error, didRequested, account } = this.state;
-    if (didRequested) return <Redirect to="/suggestion" />;
+    const { bio, tag, interest, imgProfile, didRequested, account } = this.state;
+    // if (didRequested) return <Redirect to="/suggestion" />;
     return (
       <div className="register-container">
         <div className="navbar-top-right"><NavLink to="/me" className="button">Account</NavLink></div>
-        { error && <div>{error} {window.location.reload()}</div> }
         <div className="register-form-container" onChange={this.handleChange}>
           <h2>Update your info!</h2>
           <input id="heterosexual" type="radio" name="orientation" value="heterosexual" onClick={this.handleChange} className="float-left" />
