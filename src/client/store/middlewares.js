@@ -1,14 +1,13 @@
 import R from 'ramda';
 import { push, goBack } from '../history';
-import { USER_LOGGED } from '../login/actions';
+import { USER_LOGGED } from '../components/login/actions';
 
 const EVTX_ERROR = 'EvtX:Error';
 
 export const socketIoMiddleWare = socket => ({ dispatch, getState }) => {
   socket.on('action', action => {
     if (!action || !action.type) return;
-    console.log(action.type);
-    console.log(action.payload);
+    console.log(action);
     switch (action.type) {
       case USER_LOGGED:
         localStorage.setItem('matchaToken', action.payload.matchaToken);

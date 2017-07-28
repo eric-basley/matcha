@@ -43,7 +43,7 @@ Kontrolo.childContextTypes = {
 
 Kontrolo.propTypes = {
   children: PropTypes.element.isRequired,
-  user: PropTypes.object,
+  user: PropTypes.object.isRequired,
   isAuthorized: PropTypes.func.isRequired,
   redirect: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,

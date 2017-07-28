@@ -51,6 +51,6 @@ const mapStateToProps = state => ({
   user: state.currentUser.user,
 });
 
-const actions = {}; //{ logout };
+const actions = {}; // { logout };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

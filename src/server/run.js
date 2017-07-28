@@ -21,3 +21,10 @@ const run = async (config) => {
     // });
 
 export default run;
+
+
+// stock user in store for registration 
+// request  server add a status = requesting
+// des que le server repon = user is register succes but not confirmed yet
+// confirm email => emit une actin user fullyc confirmed
+// update the state , if user is confirmed and succes go to login ->  fill the login form with name 

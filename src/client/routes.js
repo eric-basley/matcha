@@ -23,8 +23,9 @@ const asyncComponent = (getComponent) => {
   };
 };
 
-const Login = asyncComponent(() => import('./login').then(module => module.default));
-const Account = asyncComponent(() => import('./me').then(module => module.default));
+const Login = asyncComponent(() => import('./components/login').then(module => module.default));
+const Register = asyncComponent(() => import('./components/register').then(module => module.default));
+const Account = asyncComponent(() => import('./components/me').then(module => module.default));
 
 const routes = [
   {
@@ -38,6 +39,11 @@ const routes = [
     default: true,
     auth: true,
     component: Account,
+  },
+  {
+    path: '/register',
+    exact: true,
+    component: Register,
   },
 ];
 

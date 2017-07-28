@@ -3,12 +3,15 @@ import socketIO from 'socket.io-client';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import R from 'ramda';
+import { FocusStyleManager } from '@blueprintjs/core';
 import Kontrolo from './kontrolo';
 import history from './history';
 import configureStore from './store';
 import App from './app';
-import { checkToken, userLogged } from './login/actions';
+import { checkToken, userLogged } from './components/login/actions';
 
+FocusStyleManager.onlyShowFocusOnTabs();
 const mountNode = window.document.getElementById('__MATCHA__');
 const url = 'http://127.0.0.1:3004';
 const io = socketIO.connect(url);
@@ -19,15 +22,21 @@ io.on('error', err => console.log(`socket.io error: ${err}`)); // eslint-disable
 const matchaToken = localStorage.getItem('matchaToken');
 const initialState = {
   currentUser: {
-    matchaToken },
+    matchaToken,
+    user: {},
+  },
 };
 
 const store = configureStore(initialState, io);
 
+const isAuthorized = (user) => {
+  if (!user || R.isEmpty(user)) return false;
+};
+
 const Root = (
   <Provider store={store}>
     <Router history={history}>
-      <Kontrolo user={state => state.currentUser.user} isAuthorized={user => Boolean(user)} redirect="/login">
+      <Kontrolo user={state => state.currentUser.user} isAuthorized={user => isAuthorized(user)} redirect="/login">
         <App />
       </Kontrolo>
     </Router>

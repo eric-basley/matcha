@@ -22,6 +22,7 @@
     "bundle:analyse": "webpack-bundle-analyzer ./stats.json ./build --report --mode=static"
   },
   "dependencies": {
+    "@blueprintjs/core": "^1.23.1",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
     "bcrypt-as-promised": "^1.1.0",
@@ -50,10 +51,12 @@
     "query-string": "^4.3.4",
     "ramda": "^0.24.1",
     "react": "^15.0.2",
+    "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",
     "react-router-dom": "^4.1.1",
     "redux": "^3.5.2",
+    "redux-form": "^7.0.3",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",

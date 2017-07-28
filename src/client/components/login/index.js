@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { NavLink, withRouter } from 'react-router-dom';
 import { createStructuredSelector, createSelector } from 'reselect';
 import { loginRequest } from './actions';
-import { defaultRoute } from '../routes';
+import { defaultRoute } from '../../routes';
 import './login.css';
 
 class Login extends Component {
