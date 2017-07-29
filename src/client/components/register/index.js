@@ -4,9 +4,8 @@ import { createStructuredSelector, createSelector } from 'reselect';
 import { NavLink } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 // import { addUser } from './actions';
-import RegisterForm from './form';
-import WizardFirstPage from './wizardform';
-import WizardSecondPage from './wizardformsecond';
+import WizardFirstPage from './wizardfirst';
+import WizardSecondPage from './wizardsecond';
 import WizardThirdPage from './wizardthird';
 import './register.css';
 

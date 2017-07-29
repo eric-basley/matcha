@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+      // <Field type="text" name="firstname" placeholder="First Name" component={inputField} />
 
 
 const createReduxForm = reduxForm({
@@ -16,7 +17,7 @@ let registerForm = ({ handleSubmit, submitting, previousPage }) => {
       <Field component="input" className="pt-input marger-input" type="email" name="email" placeholder="Email" />
       <Field component="input" className="pt-input marger-input" type="password" name="password" placeholder="Password" />
       <div className="groupbutton marger-input  " >
-        <button type="submit" className="pt-button pt-large pt-fill pt-icon-standard pt-icon-arrow-left" onClick={previousPage}>
+        <button type="button" className="pt-button pt-large pt-fill pt-icon-standard pt-icon-arrow-left" onClick={previousPage}>
           Previous
         </button>
         <button type="submit" className="pt-button pt-large pt-fill" onClick={submitting}>

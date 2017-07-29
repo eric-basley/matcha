@@ -3,7 +3,6 @@ import { USER_LOGOUT, USER_LOGGED } from '../components/login/actions';
 
 const currentUser = (state = {}, action) => {
   const { type } = action;
-  console.log(action);
   switch (type) {
     case USER_LOGOUT:
       return R.omit(['user', 'token'], state);

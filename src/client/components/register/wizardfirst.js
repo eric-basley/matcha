@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import validate from './validate';
+import inputField from '../../containers/inputField';
 
 const createReduxForm = reduxForm({
   form: 'userRegister',
@@ -11,10 +12,10 @@ const createReduxForm = reduxForm({
 
 let registerForm = ({ handleSubmit }) => {
   return (
-    <form className="auth-container" onSubmi={handleSubmit}>
+    <form className="auth-container" onSubmit={handleSubmit}>
       <h2>Inscription</h2>
-      <Field component="input" className="pt-input marger-input" type="text" name="firstname" placeholder="First Name" />
-      <Field component="input" className="pt-input marger-input" type="text" name="lastname" placeholder="Last Name" />
+      <Field type="text" name="firstname" placeholder="First Name" component={inputField} />
+      <Field type="text" name="lastname" placeholder="Last Name" component={inputField} />
       <button type="submit" className="pt-button pt-large pt-fill" style={{ margin: '20px 0 20px 0' }}>
         Next
         <span className="pt-icon-standard pt-icon-arrow-right pt-align-right" />
