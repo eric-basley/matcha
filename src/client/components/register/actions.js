@@ -1,4 +1,4 @@
-// export const ADD_USER = 'evtx:server:users:post';
-// export const ADDED_USER = 'evtx:response:addedUser';
+export const ADD_USER_FORM = 'addUserForm';
+export const ADDED_USER = 'evtx:response:addedUser';
 
-// export const addUser = (user) => ({ type: ADD_USER, payload: user, replyTo: ADDED_USER });
+export const addUserForm = (user) => ({ type: ADD_USER_FORM, payload: user });

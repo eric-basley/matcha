@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { createStructuredSelector, createSelector } from 'reselect';
 import { NavLink } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-// import { addUser } from './actions';
+import { addUserForm } from './actions';
 import WizardFirstPage from './wizardfirst';
 import WizardSecondPage from './wizardsecond';
 import WizardThirdPage from './wizardthird';
+import { OurToaster } from "../../containers/toaster";
 import './register.css';
-
+// OurToaster.update(key, { message: "Still toasted!" });
 class Register extends Component {
 
   state = {
@@ -18,6 +19,8 @@ class Register extends Component {
   handleSubmit = (values) => {
     console.log('HANDLE SUBMIT');
     console.log(values);
+    const { addUserForm } = this.props;
+    addUserForm({ ...values, status: 'pending' });
     // addUser({ login, email, password, firstname, lastname, sexe, age });
   };
 
@@ -33,6 +36,7 @@ class Register extends Component {
 
   render() {
     const { page } = this.state;
+    const { user } = this.props;
     return (
       <div>
         <nav className="pt-navbar">
@@ -46,6 +50,7 @@ class Register extends Component {
           { page === 1 && <WizardFirstPage onSubmit={this.nextPage} /> }
           { page === 2 && <WizardSecondPage previousPage={this.previousPage} onSubmit={this.nextPage} /> }
           { page === 3 && <WizardThirdPage previousPage={this.previousPage} onSubmit={this.handleSubmit} /> }
+          { user.status === 'pending' && OurToaster.show({ message: 'Toasted!' }) }
         </div>
       </div>
     );
@@ -59,13 +64,13 @@ Register.propTypes = {
 const getState = (state) => state.currentUser;
 
 const mapStateToProps = createStructuredSelector({
-  // user: createSelector([getState], (state) => state.user),
+  user: createSelector([getState], (state) => state.user),
   // error: createSelector([getState], (state) => state.error),
   // didRequested: createSelector([getState], (state) => state.didRequested),
 });
 
 const mapDispatchToProps = {
-  // addUser,
+  addUserForm,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);
