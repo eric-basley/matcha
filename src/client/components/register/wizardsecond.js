@@ -11,8 +11,7 @@ const createReduxForm = reduxForm({
   validate,
 });
 
-let registerForm = ({ handleSubmit, previousPage }) => {
-  return (
+let registerForm = ({ handleSubmit, previousPage }) => (
     <form className="auth-container" onSubmit={handleSubmit}>
       <h2>Info</h2>
       <Field type="number" name="age" placeholder="Your Age" max="99" min="18" component={inputField} />
@@ -34,7 +33,6 @@ let registerForm = ({ handleSubmit, previousPage }) => {
       </div>
     </form>
   );
-};
 
 
 // evaluate it for ContactForm component

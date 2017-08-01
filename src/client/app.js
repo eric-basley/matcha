@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import routes, { defaultRoute } from './routes';
 // import { logout } from '../../actions/login';
 import { Auth } from './kontrolo';
+import MyToaster from './components/toaster';
 
 export class App extends Component {
 
@@ -23,8 +24,8 @@ export class App extends Component {
       }
       return <route.component {...props} />;
     };
-
     return (
+    <div>
       <Switch>
         {routes.map((route, index) => (
           <Route
@@ -38,6 +39,7 @@ export class App extends Component {
           <Route component={defaultRoute().component} />
         </Auth>
       </Switch>
+    </div>
     );
   }
 }
@@ -49,6 +51,7 @@ App.propTypes = {
 
 const mapStateToProps = state => ({
   user: state.currentUser.user,
+  message: state.toaster.message,
 });
 
 const actions = {}; // { logout };

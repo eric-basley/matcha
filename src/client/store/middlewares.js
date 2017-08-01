@@ -2,7 +2,7 @@ import R from 'ramda';
 import { push, goBack } from '../history';
 import { USER_LOGGED } from '../components/login/actions';
 
-const EVTX_ERROR = 'EvtX:Error';
+export const EVTX_ERROR = 'EvtX:Error';
 
 export const socketIoMiddleWare = socket => ({ dispatch, getState }) => {
   socket.on('action', action => {

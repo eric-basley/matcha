@@ -11,8 +11,7 @@ const createReduxForm = reduxForm({
   validate,
 });
 
-let registerForm = ({ handleSubmit, submitting, previousPage, pristine }) => {
-  return (
+let registerForm = ({ handleSubmit, submitting, previousPage, pristine }) => (
     <form className="auth-container" onSubmit={handleSubmit}>
       <h2>Account</h2>
       <Field type="text" name="login" placeholder="Login" component={inputField} />
@@ -26,11 +25,9 @@ let registerForm = ({ handleSubmit, submitting, previousPage, pristine }) => {
          Submit
           <span className="pt-icon-standard pt-icon-floppy-disk pt-align-right" />
         </button>
- 
       </div>
     </form>
   );
-};
 registerForm = createReduxForm(registerForm);
 
 export default registerForm;
