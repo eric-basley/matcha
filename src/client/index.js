@@ -58,5 +58,3 @@ io.on('connect', () => {
     render(Root, mountNode);
   }
 });
-// console.log('mounting React ...'); // eslint-disable-line no-console
-// render(<Root />, mountNode);

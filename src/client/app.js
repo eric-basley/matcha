@@ -5,44 +5,46 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import routes, { defaultRoute } from './routes';
 // import { logout } from '../../actions/login';
+import Header from './containers/headers';
 import { Auth } from './kontrolo';
 import MyToaster from './components/toaster';
 
-export class App extends Component {
 
-  render() {
-    const { user, history, logout } = this.props;
-    // const handleClick = () => history.push(`/people/${user._id}`);
-    // const handleLogout = () => logout();
-    const makeAuthRoute = route => (props) => {
-      if (route.auth) {
-        return (
-          <Auth redirect>
-            <route.component {...props} />
-          </Auth>
-        );
-      }
-      return <route.component {...props} />;
-    };
+const makeAuthRoute = route => (props) => {
+  if (route.auth) {
     return (
-      <div>
-        <Switch>
-          {routes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              exact={route.exact}
-              render={makeAuthRoute(route)}
-            />
-          ))}
-          <Auth redirect>
-            <Route component={defaultRoute().component} />
-          </Auth>
-        </Switch>
-      </div>
+      <Auth redirect>
+        <route.component {...props} />
+      </Auth>
     );
   }
-}
+  return <route.component {...props} />;
+};
+
+const App = ({ user, history, logout }) => {
+    // const handleClick = () => history.push(`/people/${user._id}`);
+  const handleLogout = () => logout();
+
+  return (
+    <div>
+      <MyToaster />
+      <Header />
+      <Switch>
+        {routes.map((route, index) => (
+          <Route
+            key={index} // eslint-disable-line react/no-array-index-key
+            path={route.path}
+            exact={route.exact}
+            render={makeAuthRoute(route)}
+          />
+        ))}
+        <Auth redirect>
+          <Route component={defaultRoute().component} />
+        </Auth>
+      </Switch>
+    </div>
+  );
+};
 
 App.propTypes = {
   user: PropTypes.object,

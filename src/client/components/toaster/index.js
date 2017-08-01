@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { createStructuredSelector, createSelector } from 'reselect';
 import PropTypes from 'prop-types';
-import { Toaster, Intent} from '@blueprintjs/core';
+import { Toaster, Intent } from '@blueprintjs/core';
 import { connect } from 'react-redux';
 import { setToaster } from './actions';
 
@@ -12,34 +12,21 @@ class MyToaster extends Component {
     show: false,
   }
 
-  // componentWillMount() {
-  //   const { message } = this.props;
-  //   if (message && !this.state.show) {
-  //     this.setState({ message });
-  //     this.setState({ show: true });
-  //     this.toaster = Toaster.create(this.state);
-  //     this.showToaster();
-  //   }
-  // }
   componentDidMount() {
     this.toaster = Toaster.create(this.state);
   }
 
-   componentDidUpdate(props) {
-      console.log(this.props);
-    console.log(props);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.message && !this.state.show) { // eslint-disable-line
+      this.setState({ show: true });
+    }
+  }
+
+  componentDidUpdate() {
     if (this.state.show) {
       this.showToaster();
     }
   }
-  componentWillReceiveProps(props) {
-    console.log(this.props);
-    console.log(props);
-    console.log(this.state);
-     if (props.message && !this.state.show)
-      this.setState({ show: true });
-  }
-
 
   showToaster = () => {
     const options = { ...this.state, ...this.props };
@@ -60,16 +47,15 @@ class MyToaster extends Component {
   }
 }
 
-
 MyToaster.propTypes = {
   setToaster: PropTypes.func.isRequired,
-  message: PropTypes.string.isRequired,
 };
 
 const getState = (state) => state.toaster;
 
 const mapStateToProps = createStructuredSelector({
   message: createSelector([getState], (state) => state.message),
+  intent: createSelector([getState], (state) => state.intent),
 });
 
 const mapDispatchToProps = {

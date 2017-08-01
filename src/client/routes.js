@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const asyncComponent = (getComponent) => {
-  return class AsyncComponent extends React.Component {
+const asyncComponent = (getComponent) => 
+  class AsyncComponent extends Component {
     static Component = null;
     state = { Component: AsyncComponent.Component };
 
     componentWillMount() {
       const { Component } = this.state;
-      if (!this.state.Component) {
+      if (!Component) {
         getComponent().then(Component => {
           AsyncComponent.Component = Component;
           this.setState({ Component });
@@ -20,19 +20,25 @@ const asyncComponent = (getComponent) => {
       if (!Component) return null;
       return <Component {...this.props} />;
     }
-  };
 };
 
 const Login = asyncComponent(() => import('./components/login').then(module => module.default));
 const Register = asyncComponent(() => import('./components/register').then(module => module.default));
 const Account = asyncComponent(() => import('./components/me').then(module => module.default));
-const ConfirmEmail = asyncComponent(() => import('./components/confirmEmail').then(module => module.default));
+const Suggestion = asyncComponent(() => import('./components/suggestion').then(module => module.default));
 
 const routes = [
   {
     path: '/login',
     exact: true,
     component: Login,
+  },
+  {
+    path: '/suggestion',
+    exact: true,
+    default: true,
+    auth: true,
+    component: Suggestion,
   },
   {
     path: '/me',
@@ -45,11 +51,6 @@ const routes = [
     path: '/register',
     exact: true,
     component: Register,
-  },
-  {
-    path: '/confirm_email',
-    exact: true,
-    component: ConfirmEmail,
   },
 ];
 

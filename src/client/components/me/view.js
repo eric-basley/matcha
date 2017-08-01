@@ -9,8 +9,6 @@ class Account extends Component {
   }
 
   componentWillMount() {
-    const { getUser } = this.props;
-    // getUser();
   }
 
   render() {

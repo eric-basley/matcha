@@ -15,8 +15,7 @@ const currentUser = (state = {}, action) => {
     case USER_LOGOUT:
       return R.omit(['user', 'token'], state);
     case USER_LOGGED:
-      const { payload: { user, matchaToken } } = action;
-      return { ...state, user: { ...state.user, status: 'connected' }, matchaToken };
+      return { ...state, user: { ...state.user, status: 'connected' } };
     default:
       return state;
   }

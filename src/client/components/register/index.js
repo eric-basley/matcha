@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector, createSelector } from 'reselect';
+import { PropTypes } from 'prop-types';
 import { setToaster } from '../toaster/actions';
 import { addUserForm, addUserInBack } from './actions';
 import WizardFirstPage from './wizardfirst';
@@ -8,8 +9,6 @@ import WizardSecondPage from './wizardsecond';
 import WizardThirdPage from './wizardthird';
 import Spinner from '../../containers/spinner';
 import { defaultRoute } from '../../routes';
-import Header from '../../containers/headers';
-import MyToaster from '../toaster';
 import './register.css';
 
 class Register extends Component {
@@ -18,16 +17,16 @@ class Register extends Component {
     showToaster: true,
     page: 1,
   }
+
   componentWillMount() {
     const { user, history } = this.props;
     if (user) history.replace(defaultRoute().path);
   }
 
-  componentWillReceiveProps(props) {
-    const { user } = props;
+  componentWillReceiveProps(nextProps) {
+    const { user } = nextProps;
     const { setToaster } = this.props;
     const { showToaster } = this.state;
-    console.log(user);
     if (!user) return null;
     if (!user.confirmed && user.status === 'response' && showToaster) {
       this.setState({ showToaster: false });
@@ -35,11 +34,10 @@ class Register extends Component {
     }
   }
 
-  handleSubmit = (values) => {
-    console.log('HANDLE SUBMIT');
+  handleSubmit = (user) => {
     const { addUserForm, addUserInBack } = this.props;
-    addUserForm({ ...values, status: 'pending' });
-    addUserInBack(values);
+    addUserForm({ ...user, status: 'pending' });
+    addUserInBack(user);
   };
 
   previousPage = () => {
@@ -54,11 +52,9 @@ class Register extends Component {
 
   render() {
     const { page } = this.state;
-    const { user: { status = '', confirmed } = '' } = this.props;
+    const { status } = this.props.user || {};
     return (
       <div>
-        <MyToaster />
-        <Header />
         <div className="home-container">
           { status !== 'pending' && page === 1 && <WizardFirstPage onSubmit={this.nextPage} /> }
           { status !== 'pending' && page === 2 && <WizardSecondPage previousPage={this.previousPage} onSubmit={this.nextPage} /> }
@@ -71,17 +67,21 @@ class Register extends Component {
 }
 
 Register.propTypes = {
+  addUserForm: PropTypes.func.isRequired,
+  addUserInBack: PropTypes.func.isRequired,
+  setToaster: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  user: PropTypes.object,
 };
 
+Register.defaultProps = {
+  user: null,
+};
 
 const getState = (state) => state.currentUser;
-const getToasterState = (state) => state.toaster;
 
 const mapStateToProps = createStructuredSelector({
   user: createSelector([getState], (state) => state.user),
-  messageToaster: createSelector([getToasterState], (state) => state.message),
-  // error: createSelector([getState], (state) => state.error),
-  // didRequested: createSelector([getState], (state) => state.didRequested),
 });
 
 const mapDispatchToProps = {

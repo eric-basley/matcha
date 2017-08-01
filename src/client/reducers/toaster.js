@@ -11,7 +11,7 @@ const toaster = (state = initialState, action) => {
     case EVTX_ERROR:
       return { ...state, message: 'Response Error' };
     case SET_TOASTER:
-      return { ...state, message: action.payload.message };
+      return { ...state, message: action.payload.message, intent: action.payload.intent };
     default:
       return state;
   }
