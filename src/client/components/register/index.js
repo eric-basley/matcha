@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector, createSelector } from 'reselect';
 import { PropTypes } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { setToaster } from '../toaster/actions';
 import { addUserForm, addUserInBack } from './actions';
 import WizardFirstPage from './wizardfirst';
@@ -90,4 +91,4 @@ const mapDispatchToProps = {
   addUserInBack,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register));

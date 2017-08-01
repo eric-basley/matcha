@@ -29,7 +29,7 @@ const initialState = {
 const store = configureStore(initialState, io);
 
 const isAuthorized = (user) => {
-  console.log(user);
+  console.log(user);  // eslint-disable-line no-console
   if (!user || R.isEmpty(user)) return false;
   return true;
 };
@@ -48,7 +48,7 @@ io.on('connect', () => {
   console.log('socket.io connected.'); // eslint-disable-line no-console
   if (matchaToken) {
     store.dispatch(checkToken((err, { user, matchaToken } = { }) => {
-      if (err) console.log(err.message);
+      if (err) console.log(err.message); // eslint-disable-line no-console
       else {
         store.dispatch(userLogged(user, matchaToken));
       }

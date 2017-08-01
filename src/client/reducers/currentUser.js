@@ -13,7 +13,8 @@ const currentUser = (state = {}, action) => {
     case ADD_USER_FORM:
       return { ...state, user: R.omit(['password'], action.payload) };
     case USER_LOGOUT:
-      return R.omit(['user', 'token'], state);
+      console.log('user_logout');
+      return R.omit(['user', 'matchaToken'], state);
     case USER_LOGGED:
       return { ...state, user: { ...state.user, status: 'connected' } };
     default:

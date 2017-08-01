@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
+import React from 'react';
 import { withRouter, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import routes, { defaultRoute } from './routes';
-// import { logout } from '../../actions/login';
+import { logout } from './components/login/actions';
 import Header from './containers/headers';
 import { Auth } from './kontrolo';
 import MyToaster from './components/toaster';
@@ -22,13 +21,12 @@ const makeAuthRoute = route => (props) => {
 };
 
 const App = ({ user, history, logout }) => {
-    // const handleClick = () => history.push(`/people/${user._id}`);
+  // const handleClick = () => history.push(`/people/${user._id}`);
   const handleLogout = () => logout();
-
   return (
     <div>
       <MyToaster />
-      <Header />
+      <Header onLogout={handleLogout} />
       <Switch>
         {routes.map((route, index) => (
           <Route
@@ -48,6 +46,7 @@ const App = ({ user, history, logout }) => {
 
 App.propTypes = {
   user: PropTypes.object,
+  logout: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -56,6 +55,7 @@ const mapStateToProps = state => ({
   message: state.toaster.message,
 });
 
-const actions = {}; // { logout };
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = {
+  logout,
+};
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
