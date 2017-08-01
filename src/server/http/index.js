@@ -10,13 +10,14 @@ import addImg from './addImg';
 import sendTokenResetPassword from './sendTokenResetPassword';
 import confirmEmail from './confirmEmail';
 import resetPassword from './resetPassword';
-
+import connectEvtx from './connectEvtx';
 const getUrl = server => `http://${server.address().address}:${server.address().port}`;
 
 const init = ctx => new Promise(resolve => {
   const app = new Koa();
   const router = new Router();
   const { server: { host, port }, secretSentence } = ctx.config;
+  const { services: { evtx } } = ctx;
   const { models: { users } } = ctx;
   const upload = multer({
     dest: path.join(__dirname, '../../../public/uploads/'),
@@ -30,6 +31,7 @@ const init = ctx => new Promise(resolve => {
     .get('/ping', ctx => ctx.body = ({ ping: 'pong' })) // eslint-disable-line
     .get('/auth', getToken, checkAuth(secretSentence), cntx => cntx.status = 200) // eslint-disable-line
     .get('/confirm_email', getToken, getUser(ctx.config), confirmEmail(users))
+    .get('/users/confirm_email', connectEvtx(evtx), ctx => ctx.body = ({ ping: 'pong' }))
     .get('/lost_password', sendTokenResetPassword(ctx))
     .post('/reset_password', getToken, checkToken, resetPassword)
     .post('/add_img',

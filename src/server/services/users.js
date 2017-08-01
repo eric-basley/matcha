@@ -2,7 +2,7 @@ import R from 'ramda';
 import bcrypt from 'bcrypt-as-promised';
 import jwt from 'jsonwebtoken';
 import geolib from 'geolib';
-import { validateLoginForm, validateRegisterForm, getIp,
+import { validateLoginForm, validateRegisterForm, getIp, confirmEmail,
   getLocalisation, checkAuth, getInfoToUpdate, sendConfirmEmail, getToken, getByEmail } from './hooks';
 import { loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers } from './hooks/suggestion';
 
@@ -13,6 +13,13 @@ const service = {
   checkToken() {
     const { user } = this;
     return Promise.resolve({ user });
+  },
+
+  confirm_email({ userConfirmed }) {
+    const { models: { users } } = this.globals;
+    const { ctx } = this.locals;
+    users.emit('confirmEmail', userConfirmed);
+    return Promise.resolve(userConfirmed);
   },
 
   logout(user) {
@@ -83,6 +90,7 @@ const init = (evtx) => evtx
   .use(service.name, service)
   .service(service.name)
   .before({
+    confirm_email: [confirmEmail],
     logout: [checkAuth],
     login: [validateLoginForm, getByEmail],
     suggestion: [checkAuth, loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers],

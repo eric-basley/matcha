@@ -4,6 +4,7 @@ import geoip from 'geoip-lite';
 import { schemaRegister, schemaLogin } from '../../../lib/validator';
 import mailer from '../../http/mailer';
 import users from '../../models/users'; // eslint-disable-line
+import R from 'ramda';
 
 export const validateRegisterForm = (ctx) => {
   const { input } = ctx;
@@ -13,6 +14,17 @@ export const validateRegisterForm = (ctx) => {
     return Promise.reject({ status: BadRequest });
   }
   return Promise.resolve({ ...ctx, input: user });
+};
+
+export const confirmEmail = async (ctx) => {
+  try {
+    const { globals: { models: { users } }, user } = ctx; // eslint-disable-line no-shadow
+    if (!user) throw new Error();
+    const userConfirmed = await users.update({ confirmed: true }, Number(user.id));
+    return ({ ...ctx, input: userConfirmed });
+  } catch (err) {
+    return Promise.reject(ctx);
+  }
 };
 
 export const validateLoginForm = (ctx) => {

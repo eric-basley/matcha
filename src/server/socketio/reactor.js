@@ -5,6 +5,8 @@ const logger = debug('matcha:socketio:reactor');
 
 const formatServiceMethod = (ctx) => {
   const { service, method, message: { type, payload } } = ctx;
+  const { message: { input } } = ctx;
+  if (input) return Promise.resolve({ ...ctx, message: input });
   if (service && method) return Promise.resolve(ctx);
   const [serv, meth] = type.split(':');
   return Promise.resolve({
@@ -38,7 +40,6 @@ const getUserFromToken = async (ctx) => {
   if (!matchaToken) return Promise.resolve(ctx);
   const dataDecoded = jwt.verify(matchaToken, secretSentence);
   if (!dataDecoded) return Promise.resolve(ctx);
-  console.log('avant');
   try {
     const user = await users.load(dataDecoded.sub);
     return ({ ...ctx, user });
