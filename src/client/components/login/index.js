@@ -5,65 +5,75 @@ import { NavLink, withRouter } from 'react-router-dom';
 import { createStructuredSelector, createSelector } from 'reselect';
 import { loginRequest } from './actions';
 import { defaultRoute } from '../../routes';
-import './login.css';
+import Header from '../../containers/headers';
+import MyToaster from '../toaster';
+import { Field, reduxForm } from 'redux-form';
+import inputField from '../../containers/inputField';
+import setToaster from '../toaster/actions';
+import FormLogin from './form';
+import '../register/register.css';
+import R from 'ramda';
 
 class Login extends Component {
+
   state = {
-    login: '',
-    password: '',
-  };
+    showToaster: true,
+  }
 
   componentWillMount() {
     const { user, history } = this.props;
+    console.log(defaultRoute().path);
     if (user) history.replace(defaultRoute().path);
   }
 
-  handleChange = ({ target: { value, name } }) => {
-    this.setState({ [name]: value });
-  };
-
-  handleSubmit = (evt) => {
-    evt.preventDefault();
+  componentWillReceiveProps(props) {
+    const { user } = props;
+    const { setToaster } = this.props;
+    const { showToaster } = this.state;
+    if (!user) return null;
+    if (!user.confirmed && user.status === 'response' && showToaster) {
+      this.setState({ showToaster: false });
+      setToaster({ message: 'Please check your email for confirmation', intent: 'success' });
+    }
+  }
+  handleSubmit = ({ login, password }) => {
     const { loginRequest } = this.props;
-    const { login, password } = this.state;
+    // const { login, password } = this.state;
     loginRequest({ login, password });
+
   };
 
   render() {
-    const { login, password } = this.state;
+    const { user } = this.props;
     return (
       <div>
-        <div className="navbar-top-right"><NavLink to="/register" className="button">Pas encore Membre?</NavLink></div>
-        <div className="register-container">
-          <form className="register-form-container" onSubmit={this.handleSubmit} onChange={this.handleChange}>
-            <h2>Login</h2>
-            <input className="input--text" type="text" name="login" placeholder="Login" value={login} />
-            <input className="input--text" type="password" name="password" placeholder="Password" value={password} />
-            <button type="submit" className="button">Login!</button><br />
-            <NavLink to="forget_password" className="second--button">Mot de passe oublié ?</NavLink>
-          </form>
+        <MyToaster />
+        <Header />
+        <div className="home-container" >
+          <FormLogin onSubmit={this.handleSubmit} />
         </div>
       </div>
     );
   }
 }
 
+
 Login.propTypes = {
-  loginRequest: PropTypes.func.isRequired,
-  user: PropTypes.object,
-  history: PropTypes.object.isRequired,
+  // loginRequest: PropTypes.func.isRequired,
+  // user: PropTypes.object,
+  // history: PropTypes.object.isRequired,
 };
 
-const getState = (state) => state;
+const getState = (state) => state.currentUser;
 
 const mapStateToProps = createStructuredSelector({
-    // error: createSelector([getState], (state) => state),
-//   didRequested: createSelector([getState], (state) => state.didRequested),
+    user: createSelector([getState], (state) => state.user),
 //   response: createSelector([getState], (state) => state.response),
 });
 
 const mapDispatchToProps = {
   loginRequest,
+  setToaster,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

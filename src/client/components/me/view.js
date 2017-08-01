@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+import Spinner from '../../containers/spinner';
 
 class Account extends Component {
   state = {
@@ -9,13 +10,13 @@ class Account extends Component {
 
   componentWillMount() {
     const { getUser } = this.props;
-    getUser();
+    // getUser();
   }
 
   render() {
     const { user } = this.props;
     console.log(user);
-    if (!user) return (<div>is Fetching...</div>);
+    if (!user) return (<Spinner />);
     return (
       <div className="container">
         <div className="navbar-top-right">

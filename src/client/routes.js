@@ -26,6 +26,7 @@ const asyncComponent = (getComponent) => {
 const Login = asyncComponent(() => import('./components/login').then(module => module.default));
 const Register = asyncComponent(() => import('./components/register').then(module => module.default));
 const Account = asyncComponent(() => import('./components/me').then(module => module.default));
+const ConfirmEmail = asyncComponent(() => import('./components/confirmEmail').then(module => module.default));
 
 const routes = [
   {
@@ -44,6 +45,11 @@ const routes = [
     path: '/register',
     exact: true,
     component: Register,
+  },
+  {
+    path: '/confirm_email',
+    exact: true,
+    component: ConfirmEmail,
   },
 ];
 

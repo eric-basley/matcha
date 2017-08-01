@@ -9,15 +9,14 @@ const currentUser = (state = {}, action) => {
     case EVTX_ERROR:
       return { ...state, user: { ...state.user, status: 'responseError' } };
     case USER_ADDED:
-      console.log(action.payload);
       return { ...state, user: { ...state.user, status: 'response', confirmed: action.payload.confirmed } };
     case ADD_USER_FORM:
       return { ...state, user: R.omit(['password'], action.payload) };
     case USER_LOGOUT:
       return R.omit(['user', 'token'], state);
     case USER_LOGGED:
-      const { payload: { user } } = action;
-      return { ...state, user };
+      const { payload: { user, matchaToken } } = action;
+      return { ...state, user: { ...state.user, status: 'connected' }, matchaToken };
     default:
       return state;
   }

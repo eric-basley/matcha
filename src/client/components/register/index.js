@@ -1,31 +1,42 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector, createSelector } from 'reselect';
-import { NavLink } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
 import { setToaster } from '../toaster/actions';
 import { addUserForm, addUserInBack } from './actions';
 import WizardFirstPage from './wizardfirst';
 import WizardSecondPage from './wizardsecond';
 import WizardThirdPage from './wizardthird';
 import Spinner from '../../containers/spinner';
-import './register.css';
+import { defaultRoute } from '../../routes';
+import Header from '../../containers/headers';
 import MyToaster from '../toaster';
+import './register.css';
 
 class Register extends Component {
 
   state = {
+    showToaster: true,
     page: 1,
-  };
-
-  componentWillMount() {
-    const { setToaster } = this.props;
-    setToaster({ message: 'ok' }); 
   }
- 
+  componentWillMount() {
+    const { user, history } = this.props;
+    if (user) history.replace(defaultRoute().path);
+  }
+
+  componentWillReceiveProps(props) {
+    const { user } = props;
+    const { setToaster } = this.props;
+    const { showToaster } = this.state;
+    console.log(user);
+    if (!user) return null;
+    if (!user.confirmed && user.status === 'response' && showToaster) {
+      this.setState({ showToaster: false });
+      setToaster({ message: 'Please check your email for confirmation', intent: 'success' });
+    }
+  }
+
   handleSubmit = (values) => {
     console.log('HANDLE SUBMIT');
-    console.log(values);
     const { addUserForm, addUserInBack } = this.props;
     addUserForm({ ...values, status: 'pending' });
     addUserInBack(values);
@@ -43,21 +54,16 @@ class Register extends Component {
 
   render() {
     const { page } = this.state;
-    const { user: { status, confirmed } } = this.props;
+    const { user: { status = '', confirmed } = '' } = this.props;
     return (
       <div>
-          <MyToaster />
-          <nav className="pt-navbar">
-          <div className="pt-navbar-group pt-align-left" />
-          <div className="pt-navbar-group pt-align-right" >
-            <span className="pt-navbar-divider" />
-            <NavLink to="/login"><button className="pt-button pt-minimal pt-icon-log-in" /></NavLink>
-          </div>
-         </nav>
+        <MyToaster />
+        <Header />
         <div className="home-container">
-          { status  !== 'pending' && page === 1 && <WizardFirstPage onSubmit={this.nextPage} /> }
+          { status !== 'pending' && page === 1 && <WizardFirstPage onSubmit={this.nextPage} /> }
           { status !== 'pending' && page === 2 && <WizardSecondPage previousPage={this.previousPage} onSubmit={this.nextPage} /> }
           { status !== 'pending' && page === 3 && <WizardThirdPage previousPage={this.previousPage} onSubmit={this.handleSubmit} /> }
+          { status === 'pending' && <Spinner />}
         </div>
       </div>
     );

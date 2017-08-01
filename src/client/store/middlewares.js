@@ -2,12 +2,17 @@ import R from 'ramda';
 import { push, goBack } from '../history';
 import { USER_LOGGED } from '../components/login/actions';
 
+const CONFIRM_EMAIL = 'confirmEmail';
 export const EVTX_ERROR = 'EvtX:Error';
 
 export const socketIoMiddleWare = socket => ({ dispatch, getState }) => {
   socket.on('action', action => {
+    console.log(action);
     if (!action || !action.type) return;
     switch (action.type) {
+      case CONFIRM_EMAIL:
+        console.log('ok');
+        return push('/login');
       case USER_LOGGED:
         localStorage.setItem('matchaToken', action.payload.matchaToken);
         dispatch(action);

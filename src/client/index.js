@@ -23,14 +23,15 @@ const matchaToken = localStorage.getItem('matchaToken');
 const initialState = {
   currentUser: {
     matchaToken,
-    user: {},
   },
 };
 
 const store = configureStore(initialState, io);
 
 const isAuthorized = (user) => {
+  console.log(user);
   if (!user || R.isEmpty(user)) return false;
+  return true;
 };
 
 const Root = (

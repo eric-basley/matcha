@@ -12,31 +12,41 @@ class MyToaster extends Component {
     show: false,
   }
 
-  componentWillMount() {
-    console.log('ok');
-    console.log(this.props);
-    const { message } = this.props;
-    console.log(message);
-    if (message && !this.state.show) {
-      this.setState({ message });
-      this.setState({ show: true });
-      this.toaster = Toaster.create(this.state);
+  // componentWillMount() {
+  //   const { message } = this.props;
+  //   if (message && !this.state.show) {
+  //     this.setState({ message });
+  //     this.setState({ show: true });
+  //     this.toaster = Toaster.create(this.state);
+  //     this.showToaster();
+  //   }
+  // }
+  componentDidMount() {
+    this.toaster = Toaster.create(this.state);
+  }
+
+   componentDidUpdate(props) {
+      console.log(this.props);
+    console.log(props);
+    if (this.state.show) {
       this.showToaster();
     }
   }
-
   componentWillReceiveProps(props) {
-    console.log('compoentWillReceivePros');
     console.log(this.props);
-
+    console.log(props);
+    console.log(this.state);
+     if (props.message && !this.state.show)
+      this.setState({ show: true });
   }
 
 
   showToaster = () => {
     const options = { ...this.state, ...this.props };
-    const { message, intent = 'danger', className } = options;
+    const { message, intent, className } = options;
     this.resetToaster();
-    this.toaster.show({ message, className, intent: Intent[intent.toUpperCase()] });
+    if (!intent) this.toaster.show({ message, className, intent: Intent.DANGER });
+    else this.toaster.show({ message, className, intent: Intent[intent.toUpperCase()] });
   }
 
   resetToaster = () => {

@@ -25,21 +25,21 @@ export class App extends Component {
       return <route.component {...props} />;
     };
     return (
-    <div>
-      <Switch>
-        {routes.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path}
-            exact={route.exact}
-            render={makeAuthRoute(route)}
-          />
-        ))}
-        <Auth redirect>
-          <Route component={defaultRoute().component} />
-        </Auth>
-      </Switch>
-    </div>
+      <div>
+        <Switch>
+          {routes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              render={makeAuthRoute(route)}
+            />
+          ))}
+          <Auth redirect>
+            <Route component={defaultRoute().component} />
+          </Auth>
+        </Switch>
+      </div>
     );
   }
 }

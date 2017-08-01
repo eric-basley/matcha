@@ -47,12 +47,14 @@ const service = {
       return R.omit('password', userloaded);
     });
   },
+
   delete({ id }) {
     const { models: { users } } = this.globals;
     return users.delete(Number(id));
   },
 
   post(user) {
+    console.log(user);
     const { models: { users } } = this.globals;
     return bcrypt.hash(user.password, 10)
     .then(hashedPassword => users.add(R.assoc('password', hashedPassword, user)));

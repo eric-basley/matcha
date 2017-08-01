@@ -12,6 +12,7 @@ class Kontrolo extends React.Component {
     this.redirectTo = redirect;
     this.history = history;
     this.isAuthorized = () => isAuthorized(this.user);
+    console.log(`RedirecTo = ${this.redirectTo}`);
     this.redirect = () => {
       if (this.redirectTo) history.push(this.redirectTo);
     };
@@ -43,7 +44,7 @@ Kontrolo.childContextTypes = {
 
 Kontrolo.propTypes = {
   children: PropTypes.element.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   isAuthorized: PropTypes.func.isRequired,
   redirect: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,
@@ -58,7 +59,6 @@ export class Auth extends React.Component { // eslint-disable-line react/no-mult
   componentWillMount() {
     const { redirect } = this.props;
     const { isAuthorized, redirect: gotoAuth } = this.context;
-    console.log(`isAuthorized ${isAuthorized()}`);
     if (!isAuthorized()) {
       if (redirect) return gotoAuth();
     }
