@@ -1,9 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import './header.css';
 
 const Header = ({ onLogout }) => (
-  <nav className="pt-navbar">
+  <nav className="pt-navbar header">
     <div className="pt-navbar-group pt-align-left" />
     <div className="pt-navbar-group pt-align-right" >
       <span className="pt-navbar-divider" />

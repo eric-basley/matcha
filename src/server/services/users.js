@@ -25,6 +25,7 @@ const service = {
     const { models: { users } } = this.globals;
     return bcrypt.compare(password, user.password).then(() => {
       const { globals: { config: { secretSentence }, expiresIn } } = this;
+      console.log('ok');
       const token = jwt.sign({ sub: user.id }, secretSentence, { expiresIn });
       const { socket } = this.locals;
       users.emit('login', { user, socket });

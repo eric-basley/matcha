@@ -25,10 +25,11 @@ class Suggestion extends Component {
     const { users } = this.props;
     return (
       <div>
-        <h2 className="bold center">Some profile you may like</h2>
+        <h2 className="bold center">Suggestion</h2>
+
         <div className="container-suggestion">
           { users.map(user => (
-            <div className="suggestion-box" onClick={this.handleClick} role="button" key={user.id} id={user.id}>
+            <div className="pt-card pt-elevation-2 pt-interactive suggestion-box" onClick={this.handleClick} role="button" key={user.id} id={user.id}>
               <img src="./picture1.png" alt="profile--1" className="picture--suggestion" id={user.id} />
               <div className="name-bio-suggestion" id={user.id}>
                 <span className="bold" id={user.id}>{user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1)}</span>, {user.age}</div>
